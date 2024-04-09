@@ -16,6 +16,7 @@ import AdminContextProvider from './Components/Context/AdminContextProvider.jsx'
 import AdminDashboard from './Components/Admin/AdminDashboard.jsx'
 import AdminNews from './Components/Admin/AdminNews.jsx'
 import News from './Components/News/News.jsx'
+import AdminGames from './Components/Admin/AdminGames/AdminGames.jsx'
 
 
 
@@ -35,6 +36,7 @@ const router=createBrowserRouter(
         <Route path='/Admin/Dashboard' element={<AdminDashboard/>}/>  
         <Route path='/Admin/User' element={<AdminHome/>}/>
         <Route path='/Admin/News' element={<AdminNews/>}/>
+        <Route path='/Admin/Game' element={<AdminGames/>}/>
       </Route>
       <Route path='/Admin/Signup' element={<AdminSignup/>}/>
       <Route path='/Admin/Signin' element={<AdminSignin/>}/>   

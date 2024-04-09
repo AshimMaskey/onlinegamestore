@@ -65,7 +65,8 @@ const AdminNews = () => {
 	
     return (
     <>
-        <div className="max-w-md mx-auto mt-10 bg-gray-900 p-8 rounded-lg shadow-lg">
+    <div className='ml-10'>
+        <div className="max-w-3xl mt-10 bg-gray-900 p-8 rounded-lg shadow-lg">
             <h2 className="text-2xl font-bold text-white mb-6">Add News Article</h2>
             <form onSubmit={handleSubmit} >
                 <div className="mb-4">
@@ -155,7 +156,7 @@ const AdminNews = () => {
         </div>
         <div className="text-white dark-mode overflow-x-auto my-20">
             <h1 className='text-2xl ml-20 mb-5'>News Data:</h1>
-            <table className="mx-auto max-w-6xl divide-y divide-gray-700">
+            <table className="max-w-6xl divide-y divide-gray-700">
                 <thead>
                     <tr>
                         <th className="px-2 py-3 bg-gray-800 text-left text-xs font-medium uppercase tracking-wider">ID</th>
@@ -163,9 +164,7 @@ const AdminNews = () => {
                         <th className="px-2 py-3 bg-gray-800 text-left text-xs font-medium uppercase tracking-wider">Description</th>
                         <th className="px-2 py-3 bg-gray-800 text-left text-xs font-medium uppercase tracking-wider">Date</th>
                         <th className="px-2 py-3 bg-gray-800 text-left text-xs font-medium uppercase tracking-wider">Author</th>
-                        <th className="px-2 py-3 bg-gray-800 text-left text-xs font-medium uppercase tracking-wider">Action</th>
-                        {/* <th className="px-6 py-3 bg-gray-800 text-left text-xs font-medium uppercase tracking-wider">Source Link</th>
-                        <th className="px-6 py-3 bg-gray-800 text-left text-xs font-medium uppercase tracking-wider">Image</th> */}
+                        <th className="px-2 py-3 bg-gray-800 text-left text-xs font-medium uppercase tracking-wider">Action</th>                       
                     </tr>
                 </thead>
                 <tbody className="bg-gray-800 divide-y divide-gray-700">
@@ -176,13 +175,12 @@ const AdminNews = () => {
                             <td className="px-2 py-4 whitespace-wrap">{news.description}</td>
                             <td className="px-2 py-4 whitespace-nowrap">{news.date}</td>
                             <td className="px-2 py-4 whitespace-nowrap">{news.Author}</td>
-                            <td className="px-2 py-4 whitespace-nowrap"><a target='_blank' href={news.link}><button className='bg-blue-700 hover:bg-blue-600 border-gray-800 border-2 duration-200 px-2 py-1 rounded-lg mr-1'>View</button></a><button onClick={()=>handleDelete(news.news_id)} className='bg-red-700 border-gray-800 border-2 rounded-lg text-white px-2 py-1 hover:cursor-pointer hover:bg-red-600 duration-200 '>Delete</button></td>
-                            {/* <td className="px-6 py-4 whitespace-nowrap"><a href={news.link} className="text-blue-400 hover:underline">{news.link}</a></td>
-                            <td className="px-6 py-4 whitespace-nowrap"><img src={`http://localhost/onlinegamestore/admin/${news.image_url}`} alt={news.title} className="h-10 w-10" /></td> */}
+                            <td className="px-2 py-4 whitespace-nowrap"><a target='_blank' href={news.link}><button className='bg-blue-700 hover:bg-blue-600 border-gray-800 border-2 duration-200 px-2 py-1 rounded-lg mr-1'>View</button></a><button onClick={()=>handleDelete(news.news_id)} className='bg-red-700 border-gray-800 border-2 rounded-lg text-white px-2 py-1 hover:cursor-pointer hover:bg-red-600 duration-200 '>Delete</button></td>                            
                         </tr>
                     ))}
                 </tbody>
             </table>
+        </div>
         </div>
         </>
     );

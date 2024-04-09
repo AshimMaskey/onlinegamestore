@@ -2,6 +2,7 @@ import React from "react";
 import { useState,useEffect } from "react";
 import AdminContext from "./AdminContext";
 const AdminContextProvider=({children})=>{
+  // for login of admin
 	const [isLoggedIn, setIsLoggedIn] = useState(() => {
 		const storedIsLoggedIn = localStorage.getItem('isLoggedIn');
 		return storedIsLoggedIn ? JSON.parse(storedIsLoggedIn) : false;
@@ -16,6 +17,8 @@ const AdminContextProvider=({children})=>{
 	  setIsLoggedIn(false);
 	  localStorage.setItem('isLoggedIn', JSON.stringify(false));
 	};
+
+  //for news data fetch and delete
 	const [newsData, setNewsData] = useState([]);
 
     useEffect(() => {
@@ -48,9 +51,43 @@ const AdminContextProvider=({children})=>{
           .catch(error => console.error('error deleting news', error));
       };
 
+      // for games data fetch and delete
+      const [gamesData, setGamesData] = useState([]);
+      useEffect(() => {
+        fetch('http://localhost/onlinegamestore/admin/fetchgames.php')
+            .then(response => response.json())
+            .then(data => {
+                setGamesData(data);
+            })
+            .catch(error => {
+                console.error('Error fetching games data:', error);
+            });
+    }, []);
+    const handleDelete2 = (game_id) => {  
+
+      fetch(`http://localhost/onlinegamestore/admin/deletegames.php?game_id=${game_id}`, {
+        method: 'DELETE',
+        headers: {
+          'Content-Type': 'application/json',	
+        },
+      })
+        .then(response => {
+          if (response.ok) {
+            console.log(`game with ID ${game_id} deleted successfully`);
+            const updatedGamesData = gamesData.filter(game => game.game_id !== game_id);
+            setGamesData(updatedGamesData);
+          } else {
+            console.error(`Failed to delete game with ID ${game_id}}`);
+          }
+        })
+        .catch(error => console.error('error deleting game', error));
+    };
+
+
+
 	return(
 		<>
-		<AdminContext.Provider value={{isLoggedIn,login,logout, newsData, setNewsData, handleDelete}}>
+		<AdminContext.Provider value={{isLoggedIn,login,logout, newsData, setNewsData, handleDelete, handleDelete2, gamesData, setGamesData}}>
 			{children}
 		</AdminContext.Provider>
 		</>
