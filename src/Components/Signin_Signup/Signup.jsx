@@ -1,12 +1,17 @@
-import {useState} from 'react';
+import {useContext, useState} from 'react';
 import FormInput from './FormInput'
 import {logo} from '../../assets/images'
 import Button4 from '../Buttons/Button4'
 import { Link, useNavigate } from 'react-router-dom';
+import AdminContext from '../Context/AdminContext';
 
 
-function Signup() {  
+function Signup() { 
+  const {user}=useContext(AdminContext); 
 const navigate=useNavigate();
+if(user){
+  navigate('/Account');
+}
 
   const [values, setValues]=useState({
     username:"",

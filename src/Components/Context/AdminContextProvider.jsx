@@ -1,8 +1,10 @@
 import React from "react";
+import { toast } from "react-toastify";
 import { useState,useEffect } from "react";
-import AdminContext from "./AdminContext";
+import AdminContext from "./AdminContext"; 
 const AdminContextProvider=({children})=>{
-  // for login of admin
+
+  // FOR LOGIN OF ADMIN AND ADMIN DATA
 	const [isLoggedIn, setIsLoggedIn] = useState(() => {
 		const storedIsLoggedIn = localStorage.getItem('isLoggedIn');
 		return storedIsLoggedIn ? JSON.parse(storedIsLoggedIn) : false;
@@ -14,11 +16,157 @@ const AdminContextProvider=({children})=>{
 	};
   
 	const logout = () => {
-	  setIsLoggedIn(false);
+    setIsLoggedIn(false);
 	  localStorage.setItem('isLoggedIn', JSON.stringify(false));
 	};
 
-  //for news data fetch and delete
+
+
+  // FOR LOGIN OF USER AND USER DATA
+  const [user, setUser]=useState(null);
+  useEffect(() => {
+    const userData = JSON.parse(localStorage.getItem('userData'));
+    if (userData) {
+      setUser(userData);
+    }
+  }, []);
+
+  const userLogin=(userData)=>{
+    setUser(userData);
+    localStorage.setItem('userData',JSON.stringify(userData));
+  };
+  const userLogout=()=>{
+    setUser(null);
+    localStorage.removeItem('userData');
+  }
+  
+
+
+  // ADD TO CART FUNCTIONALITIES
+  const [cart, setCart]=useState([]);
+  const [cartUpdated, setCartUpdated] = useState(false);
+  const handleAddToCart = (game_id) => {
+   if(user)
+   {
+    if(confirm('Add to Cart?'))
+    {
+      fetch('http://localhost/onlinegamestore/user/addtocart.php', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                game_id: game_id,
+                user_id: user.user_id
+            })
+        })
+        .then(response => {
+            if (response.ok) {
+                return response.json();
+            } else {
+                throw new Error('Network response was not ok');
+            }
+        })
+        .then(data => {
+            if (data.success) {
+                console.log(`Game with ID ${game_id} added to cart successfully`);
+                toast.success('Item Added to Cart successfully!', {
+                  position: "top-right",
+                  autoClose: 3000,
+                  hideProgressBar: false,
+                  closeOnClick: true,
+                  pauseOnHover: true,
+                  draggable: true,
+                  progress: undefined,
+                  theme: "light",
+                  // transition: Bounce,
+                  });
+                setCartUpdated(prevState => !prevState);
+            } else {
+                console.error(`Failed to add game with ID ${game_id} to cart: ${data.message}`);
+                if (data.message === "Game already added to cart") {
+                  toast.error('Item already in Cart!', {
+                    position: "top-right",
+                    autoClose: 3000,
+                    hideProgressBar: false,
+                    closeOnClick: true,
+                    pauseOnHover: true,
+                    draggable: true,
+                    progress: undefined,
+                    theme: "light",
+                    });
+                }
+            }
+        })
+        .catch(error => console.error('Error adding game to cart:', error));
+    }
+   }
+   else{
+    toast.error('You should be Signed in first!!', {
+      position: "top-right",
+      autoClose: 3000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+      theme: "light",
+      });
+   }
+};
+useEffect(() => {
+  if (user && user.user_id) {
+    fetch('http://localhost/onlinegamestore/user/fetchcartitems.php', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({ user_id: user.user_id })
+    })
+    .then(response => response.json())
+    .then(data => setCart(data))
+    .catch(error => console.error('error fetching cart items:', error));
+  }
+}, [user,cartUpdated]);
+
+const handleDeleteCartItem=(game_id)=>{
+  if(confirm('Are you sure you want to delete the item from cart?'))
+  {
+    fetch(`http://localhost/onlinegamestore/user/deletecartitem.php`, {
+      method: 'DELETE',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        user_id: user.user_id,
+        game_id: game_id
+      })
+    })
+    .then(response => {
+      if (response.ok) {
+        console.log(`Game with ID ${game_id} deleted from the cart successfully`);
+        setCart(cart => cart.filter(item => item.game_id !== game_id));
+        toast.success('Cart item deleted successfully! ', {
+          position: "top-right",
+          autoClose: 3000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "light",
+          });
+      } else {
+        console.error(`Failed to delete game with ID ${game_id} from the cart`);
+      }
+    })
+    .catch(error => console.error('Error deleting game from cart:', error));
+  }
+}
+
+
+
+  //FOR NEWS DATA
 	const [newsData, setNewsData] = useState([]);
 
     useEffect(() => {
@@ -51,7 +199,9 @@ const AdminContextProvider=({children})=>{
           .catch(error => console.error('error deleting news', error));
       };
 
-      // for games data fetch and delete
+
+
+      //FOR GAMES DATA FETCH AND DELETE
       const [gamesData, setGamesData] = useState([]);
       useEffect(() => {
         fetch('http://localhost/onlinegamestore/admin/fetchgames.php')
@@ -81,17 +231,17 @@ const AdminContextProvider=({children})=>{
           }
         })
         .catch(error => console.error('error deleting game', error));
+
     };
 
 
 
 	return(
 		<>
-		<AdminContext.Provider value={{isLoggedIn,login,logout, newsData, setNewsData, handleDelete, handleDelete2, gamesData, setGamesData}}>
+		<AdminContext.Provider value={{isLoggedIn,login,logout, newsData, setNewsData, handleDelete, handleDelete2, gamesData, setGamesData, userLogin,userLogout, user, setUser, handleAddToCart, setCart, cart, handleDeleteCartItem}}>
 			{children}
 		</AdminContext.Provider>
 		</>
 	)
-
 }
 export default AdminContextProvider;

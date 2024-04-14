@@ -1,18 +1,20 @@
 import logo from "../../assets/logo.png";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faMagnifyingGlass, faShoppingCart, faSignInAlt, faBars } from '@fortawesome/free-solid-svg-icons';
+import { faMagnifyingGlass, faShoppingCart, faSignInAlt, faBars, faUser } from '@fortawesome/free-solid-svg-icons';
 import { Link, NavLink } from "react-router-dom";
+import { useContext } from "react";
+import AdminContext from "../Context/AdminContext";
 const Header=()=>{
+	const {user}=useContext(AdminContext);
 	const navItems=[
 		{link:"Home", path:"/",},
 		{link:"Store", path:"/Store",},
 		{link:"News", path:"/News"},
-		{link:"About", path:"/About"}
 	]
 	const navItems2=[
 		{link:"Search", path:"/Search", icon: faMagnifyingGlass},
-		{link:"Cart", path:"/Cart", icon: faShoppingCart},
-		{link:"Sign in", path:"/Signin", icon: faSignInAlt}
+		{link:"Cart", path:user?"/Cart":"/Signin", icon: faShoppingCart},
+		{link: user?user.username:"Sign in", path:user?"/Account":"/Signin", icon:user? faUser: faSignInAlt}
 	]
 	return(
 		<>

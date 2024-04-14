@@ -16,7 +16,7 @@ function Footer() {
   return (
     <>
     <div className='bg-[#202020] w-full'>
-      <div className='py-7 px-20 flex justify-between'>
+      <div className='py-5 px-20 flex justify-between'>
         <div className='text-white text-3xl'>
           <FontAwesomeIcon className='hover:text-[aqua] hover:cursor-pointer mr-5' icon={faFacebook} />
           <FontAwesomeIcon className='hover:text-[aqua] hover:cursor-pointer mr-5' icon={faTwitter} />
@@ -31,7 +31,7 @@ function Footer() {
         <br />
         Our website may contain links to other sites and resources provided by third parties. These links are provided for your convenience only. Game Vortex has no control over the contents of those sites or resources, and accepts no responsibility for them or for any loss or damage that may arise from your use of them.</p>
       </div>
-      <div className='px-20 pb-14 mt-4 '>
+      <div className='px-20 pb-5 mt-4 '>
         <Link to="customerservice" className='text-white border-b-2 border-white hover:text-blue-500 hover:border-blue-500 duration-300'>Customer Service</Link>
       </div>
     </div>

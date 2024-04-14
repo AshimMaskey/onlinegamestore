@@ -9,13 +9,11 @@ function LayoutAdmin() {
   const { isLoggedIn } = useContext(AdminContext);
 
   useEffect(() => {
-    // Check if user is not logged in, then navigate to sign-in page
     if (!isLoggedIn) {
       navigate('/Admin/Signin');
     }
-  }, [isLoggedIn]); // Re-run effect when isLoggedIn changes 
+  }, [isLoggedIn]); 
 
-  // Render sidebar, header, and outlet only if user is logged in
   return isLoggedIn ? (
     <div className="flex">
       <div>

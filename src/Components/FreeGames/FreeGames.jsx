@@ -1,50 +1,26 @@
-import React, { useContext, useState } from 'react';
-import AdminContext from '../Context/AdminContext';
+import React, { useContext, useState } from 'react'
+import AdminContext from '../Context/AdminContext'
 import { Link } from 'react-router-dom';
 
-function Store() {
-  const { gamesData } = useContext(AdminContext);
-  const [selectedGenre, setSelectedGenre] = useState('');
+function FreeGames() {
+	const {gamesData}= useContext(AdminContext);
+	const freeGames = gamesData.filter((game)=>game.price==0);
   const [currentPage, setCurrentPage] = useState(1);
   const gamesPerPage = 6;
 
-  const handleGenreChange = (e) => {
-    setSelectedGenre(e.target.value);
-    setCurrentPage(1);
-  };
-
-  const filteredGames = selectedGenre
-    ? gamesData.filter((game) => game.genre === selectedGenre)
-    : gamesData;
-
-  // Calculate index range for current page
   const indexOfLastGame = currentPage * gamesPerPage;
   const indexOfFirstGame = indexOfLastGame - gamesPerPage;
-  const currentGames = filteredGames.slice(indexOfFirstGame, indexOfLastGame);
+  const currentGames = freeGames.slice(indexOfFirstGame, indexOfLastGame);
 
   // Calculate total number of pages
-  const totalPages = Math.ceil(filteredGames.length / gamesPerPage);
+  const totalPages = Math.ceil(freeGames.length / gamesPerPage);
 
   const paginate = (pageNumber) => setCurrentPage(pageNumber);
 
   return (
-    <>
-      <div className='flex mt-10 mx-auto flex-wrap justify-between max-w-5xl'>
-        <h1 className='uppercase text-2xl text-white italic'>ALL GAMES:</h1>
-        <div>
-          <select
-            value={selectedGenre}
-            onChange={handleGenreChange}
-            className='bg-white rounded-md px-2 py-1 mr-4 focus:outline-none'
-          >
-            <option value=''>All Genres</option>
-            {Array.from(new Set(gamesData.map((game) => game.genre))).map((genre) => (
-              <option key={genre} value={genre}>
-                {genre}
-              </option>
-            ))}
-          </select>
-        </div>
+	<>
+	<div className='flex mt-10 mx-auto flex-wrap justify-center max-w-5xl'>
+        <h1 className='uppercase text-2xl text-white italic'>FREE GAMES:</h1>        
       </div>
       <div className='justify-center mx-auto flex md:max-w-5xl flex-wrap gap-10 md:gap-20 my-10'>
         {currentGames.map((game) => (
@@ -76,15 +52,15 @@ function Store() {
         </div>
         <button
           onClick={() => paginate(currentPage + 1)}
-          disabled={indexOfLastGame >= filteredGames.length}
+          disabled={indexOfLastGame >= freeGames.length}
           className='bg-white rounded-md px-4 py-2 ml-4 focus:outline-none'
         >
           Next
         </button>
       </div>
 
-    </>
-  );
+	</>
+  )
 }
 
-export default Store;
+export default FreeGames

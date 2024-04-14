@@ -1,10 +1,13 @@
-import {useState} from 'react';
+import {useContext, useState} from 'react';
+import { toast } from 'react-toastify';
 import FormInput from './FormInput'
 import {logo} from '../../assets/images'
 import Button4 from '../Buttons/Button4'
 import { Link, useNavigate} from 'react-router-dom';
+import AdminContext from '../Context/AdminContext';
 
 function Signin() {  
+  const {userLogin, user}= useContext(AdminContext);
   const [error,setError]=useState('');
   const [values, setValues]=useState({
     username:"",
@@ -12,6 +15,10 @@ function Signin() {
   })
   const navigate=useNavigate();
   
+  if(user)
+  {
+    return navigate('/Account');
+  }
   const inputs=[
     {
       id:1,
@@ -45,8 +52,19 @@ function Signin() {
    .then(response=>response.json())
    .then(data=>{
     if(data.success){
+      userLogin(data.user);
       console.log('signin successful');
       navigate('/');
+      toast.success('Signed in Successfully', {
+        position: "top-right",
+        autoClose: 3000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "light",
+        });
     }
     else{
       setError(data.message);

@@ -10,6 +10,8 @@ import valorant1 from "./valorant1.jpg";
 import clashofclans from "./clashofclans.jpg";
 import clashofclans1 from "./clashofclans1.jpg";
 import logo from "./logo.png"
+import userimg from "./user.jfif"
+import empty from "./empty.jfif"
 
 export {
     mlbb,
@@ -23,5 +25,7 @@ export {
     valorant1,
     clashofclans,
     clashofclans1, 
-    logo
+    logo,
+    userimg,
+    empty
 };
