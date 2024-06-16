@@ -8,12 +8,12 @@ import AdminContext from '../Context/AdminContext';
 
 function AdminSignup() {  
 const navigate=useNavigate();
-const {isLoggedIn}=useContext(AdminContext);
+const {admin}=useContext(AdminContext);
   useEffect(()=>{
-   if(!isLoggedIn){
+   if(!admin){
     navigate('/Admin/Signin');    
    }
-  },[isLoggedIn]);
+  },[admin]);
 
   const [values, setValues]=useState({
     admin_name:"",

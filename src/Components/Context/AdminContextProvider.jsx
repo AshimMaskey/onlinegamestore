@@ -2,27 +2,31 @@ import React from "react";
 import { toast } from "react-toastify";
 import { useState,useEffect } from "react";
 import AdminContext from "./AdminContext"; 
+import { Navigate } from "react-router-dom";
 const AdminContextProvider=({children})=>{
 
   // FOR LOGIN OF ADMIN AND ADMIN DATA
-	const [isLoggedIn, setIsLoggedIn] = useState(() => {
-		const storedIsLoggedIn = localStorage.getItem('isLoggedIn');
-		return storedIsLoggedIn ? JSON.parse(storedIsLoggedIn) : false;
-	});
-	
-	const login = () => {
-	  setIsLoggedIn(true);
-	  localStorage.setItem('isLoggedIn', JSON.stringify(true));
-	};
-  
-	const logout = () => {
-    setIsLoggedIn(false);
-	  localStorage.setItem('isLoggedIn', JSON.stringify(false));
-	};
+  const [admin, setAdmin]=useState(null);
+  useEffect(() => {
+    const adminData = JSON.parse(localStorage.getItem('adminData'));
+    if (adminData) {
+      setAdmin(adminData);
+    }
+  }, []);
+
+  const adminLogin=(adminData)=>{
+    setAdmin(adminData);
+    localStorage.setItem('adminData',JSON.stringify(adminData));
+  };
+  const adminLogout=()=>{
+    setAdmin(null);
+    localStorage.removeItem('adminData');
+    <Navigate to='/Admin/Signin'/>;
+  }
 
 
 
-  // FOR LOGIN OF USER AND USER DATA
+  // hFOR LOGIN OF USER AND USER DATA
   const [user, setUser]=useState(null);
   useEffect(() => {
     const userData = JSON.parse(localStorage.getItem('userData'));
@@ -72,7 +76,7 @@ const AdminContextProvider=({children})=>{
                 console.log(`Game with ID ${game_id} added to cart successfully`);
                 toast.success('Item Added to Cart successfully!', {
                   position: "top-right",
-                  autoClose: 3000,
+                  autoClose: 1000,
                   hideProgressBar: false,
                   closeOnClick: true,
                   pauseOnHover: true,
@@ -213,24 +217,26 @@ const handleDeleteCartItem=(game_id)=>{
                 console.error('Error fetching games data:', error);
             });
     }, []);
-    const handleDelete2 = (game_id) => {  
-
-      fetch(`http://localhost/onlinegamestore/admin/deletegames.php?game_id=${game_id}`, {
-        method: 'DELETE',
-        headers: {
-          'Content-Type': 'application/json',	
-        },
-      })
-        .then(response => {
-          if (response.ok) {
-            console.log(`game with ID ${game_id} deleted successfully`);
-            const updatedGamesData = gamesData.filter(game => game.game_id !== game_id);
-            setGamesData(updatedGamesData);
-          } else {
-            console.error(`Failed to delete game with ID ${game_id}}`);
-          }
+    const handleDelete2 = (game_id) => { 
+      const result=confirm('Are you sure you want to delete the game?');
+      if(result){
+        fetch(`http://localhost/onlinegamestore/admin/deletegames.php?game_id=${game_id}`, {
+          method: 'DELETE',
+          headers: {
+            'Content-Type': 'application/json',	
+          },
         })
-        .catch(error => console.error('error deleting game', error));
+          .then(response => {
+            if (response.ok) {
+              console.log(`game with ID ${game_id} deleted successfully`);
+              const updatedGamesData = gamesData.filter(game => game.game_id !== game_id);
+              setGamesData(updatedGamesData);
+            } else {
+              console.error(`Failed to delete game with ID ${game_id}}`);
+            }
+          })
+          .catch(error => console.error('error deleting game', error));
+      }
 
     };
 
@@ -238,7 +244,7 @@ const handleDeleteCartItem=(game_id)=>{
 
 	return(
 		<>
-		<AdminContext.Provider value={{isLoggedIn,login,logout, newsData, setNewsData, handleDelete, handleDelete2, gamesData, setGamesData, userLogin,userLogout, user, setUser, handleAddToCart, setCart, cart, handleDeleteCartItem}}>
+		<AdminContext.Provider value={{ newsData, setNewsData, handleDelete, handleDelete2, gamesData, setGamesData,adminLogin,adminLogout,admin,setAdmin, userLogin,userLogout, user, setUser, handleAddToCart, setCart, cart, handleDeleteCartItem}}>
 			{children}
 		</AdminContext.Provider>
 		</>

@@ -17,7 +17,7 @@ function GameDetails() {
 
   return (	
 	<>
-	<div className='mt-10 mb-20 mx-auto md:max-w-7xl'>
+	<div className='mt-10 mb-20 mx-7 md:mx-20 md:max-w-7xl'>
 		<div>
 			<h1 className='text-white italic text-2xl md:text-4xl font-sans font-semibold'>{game.game_title}</h1>
 		</div>
@@ -26,9 +26,9 @@ function GameDetails() {
 			<div className='mt-5'>
 				<span className='text-gray-300 italic font-light'>Release Date: {game.release_date}</span>
 			</div>
-			<img src={`http://localhost/onlinegamestore/admin/${game.image_url}`} className='rounded-lg mt-5 w-2/3' alt="" />
-			<div className='w-2/3 mt-5'>
-				<p className='text-gray-100 text-lg'>{game.description}</p>
+			<img src={`http://localhost/onlinegamestore/admin/${game.image_url}`} className='rounded-lg mt-5 w-5/6 md:w-4/5' alt="" />
+			<div className='w-full md:w-4/5 mt-5'>
+				<p className='text-gray-100 text-md md:text-lg'>{game.description}</p>
 			</div>
 			<div className='mt-5 border-white border-x-2 px-3 inline-block'>
 				<span className='text-gray-300'>Genre:</span>

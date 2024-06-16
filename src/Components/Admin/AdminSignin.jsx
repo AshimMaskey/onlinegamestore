@@ -7,16 +7,15 @@ import AdminContext from '../Context/AdminContext';
 
 
 function AdminSignin() {
-  const navigate=useNavigate();
-  const {login,isLoggedIn}=useContext(AdminContext);
-  useEffect(()=>{
-   if(isLoggedIn){
-    alert('You need to log out first!');
-    navigate('/admin');
-    
-   }
-  },[isLoggedIn]);
 
+  const navigate=useNavigate();
+  const {adminLogin, admin}=useContext(AdminContext);
+  console.log(admin);
+ 
+   if(admin){
+    return navigate('/admin');
+   }
+  
   const [error,setError]=useState('');
   const [values, setValues]=useState({
     admin_name:"",
@@ -56,7 +55,7 @@ function AdminSignin() {
    .then(response=>response.json())
    .then(data=>{
     if(data.success){
-      login();
+      adminLogin(data.admin);
       console.log('signin successful');
       navigate('/Admin');
     }

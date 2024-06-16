@@ -13,7 +13,7 @@ function AdminGames() {
   return (
 	<>
 	<div className='m-10'>
-		<div><button onClick={handleClick} className='text-white bg-indigo-600 py-1 hover:bg-indigo-800 duration-200 px-2 rounded-md'>Add Games</button></div>
+		<div><button onClick={handleClick} className='text-white mb-3 bg-indigo-600 py-1 hover:bg-indigo-800 duration-200 px-2 rounded-md'>Add Games</button></div>
 		<div>
 			{
 				show?(<GameForm />): null

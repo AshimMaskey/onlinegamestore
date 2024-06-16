@@ -5,16 +5,16 @@ import { Link, NavLink } from "react-router-dom";
 import { useContext } from "react";
 import AdminContext from "../Context/AdminContext";
 const Header=()=>{
-	const {user}=useContext(AdminContext);
+	const {user,cart}=useContext(AdminContext);
 	const navItems=[
-		{link:"Home", path:"/",},
-		{link:"Store", path:"/Store",},
-		{link:"News", path:"/News"},
+		{id:1, link:"Home", path:"/",},
+		{id:2, link:"Store", path:"/Store",},
+		{id:3, link:"News", path:"/News"},
 	]
 	const navItems2=[
-		{link:"Search", path:"/Search", icon: faMagnifyingGlass},
-		{link:"Cart", path:user?"/Cart":"/Signin", icon: faShoppingCart},
-		{link: user?user.username:"Sign in", path:user?"/Account":"/Signin", icon:user? faUser: faSignInAlt}
+		{id:4, link:"Search", path:"/Search", icon: faMagnifyingGlass},
+		{id:5, link:"Cart", path:user?"/Cart":"/Signin", icon: faShoppingCart, value:cart.length},
+		{id:6, link: user?user.username:"Sign in", path:user?"/Account":"/Signin", icon:user? faUser: faSignInAlt}
 	]
 	return(
 		<>
@@ -28,7 +28,7 @@ const Header=()=>{
 				<div className=" hidden lg:block">
 					<ul>						
 					<li>
-						 { navItems.map(({link,path})=>( <NavLink className={({isActive}) => `hover:text-white hover:border-b-2 hover:border-white mx-7 text-lg text-[#ffffffc6] ${isActive ? 'border-b-[2px] text-white' : ''}`} to={path} > {link} </NavLink> )) }
+						 { navItems.map(({id,link,path})=>( <NavLink key={id} className={({isActive}) => `hover:text-white hover:border-b-2 hover:border-white mx-7 text-lg text-[#ffffffc6] ${isActive ? 'border-b-[2px] text-white' : ''}`} to={path} > {link} </NavLink> )) }
 					</li>		
 					</ul>
 				</div>
@@ -36,7 +36,7 @@ const Header=()=>{
 					<ul className="hidden sm:block">
 						<li>
 						{
-							navItems2.map(({link,path,icon})=><NavLink className=" hover:text-[white] hover:border-b-[2px] hover:border-[white] mx-4 text-md md:text-lg  text-[#ffffffc6]"  to={path}><FontAwesomeIcon className=" pr-3" icon={icon} />{link}</NavLink>)
+							navItems2.map(({id,link,path,icon,value})=><NavLink key={id} className=" hover:text-[white] hover:border-b-[2px] hover:border-[white] mx-4 text-md md:text-lg  text-[#ffffffc6]"  to={path}><span className="text-red-500 font-semibold font-mono text-md">{value}</span><FontAwesomeIcon className=" mr-2" icon={icon} />{link}</NavLink>)
 						}
 						</li>
 					</ul>

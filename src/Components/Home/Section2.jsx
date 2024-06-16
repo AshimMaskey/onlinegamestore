@@ -8,19 +8,19 @@ const Section2=()=>{
 	const noOfGames=4;
 	const paidGames=gamesData.filter((game)=>game.price!=0);
 	const paidGames1=paidGames.slice(0,noOfGames);
-	console.log(paidGames1);
+	// console.log(paidGames1);
 return(
 	<>
 	<div className="w-[80%] mx-auto mt-20 mb-40	">		
 		<div className="flex flex-col ">		
-		<div className="mb-10 flex justify-between">
-			<h1 className="text-white text-3xl text-center">Paid Games:</h1>
+		<div className="mb-10 mx-10 md:mx-2 flex justify-between items-center">
+			<h1 className="text-white text-xl md:text-3xl text-center">Paid Games:</h1>
 			<Link to={'/PaidGames'}><Button value='View More'/></Link>
 		</div>
-		<div className='flex flex-wrap justify-around gap-y-10'>
+		<div className='flex flex-wrap justify-around gap-x-2 gap-y-10'>
 			{
 				paidGames1.map((game)=>(
-					<div className="flex hover:cursor-pointer gap-y-2 flex-col w-64 max-h-[28rem]">
+					<div key={game.game_id} className="flex hover:cursor-pointer gap-y-2 flex-col w-64 max-h-[28rem]">
 						<Link to={`/Store/GameDetails/${game.game_id}`}>
 						<div className="">
 								<img className="rounded-2xl hover:brightness-75 duration-300" src={`http://localhost/onlinegamestore/admin/${game.image_url}`} alt="" />

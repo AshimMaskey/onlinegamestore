@@ -1,6 +1,21 @@
-import React from 'react'
+import React, { useContext, useEffect, useState } from 'react'
+import AdminContext from '../Context/AdminContext'
 
 function AdminDashboard() {
+  const [userData, setUserData]=useState([]);
+  const {gamesData}=useContext(AdminContext);
+  useEffect(()=>{
+    fetch('http://localhost/onlinegamestore/admin/showuser.php',{
+      method:'GET',
+      headers: {
+      'Content-Type':'application/json',
+    },
+    })
+    .then(response=>response.json())
+    .then(data=>setUserData(data))
+    .catch(error=>console.error('error fetching data', error));
+    
+  },[]);
   return (
 	<>
   <div className='m-10'>
@@ -14,11 +29,11 @@ function AdminDashboard() {
         <p className='mt-3 text-2xl text-gray-300 font-serif'>Total Earning</p>
       </div>
       <div className='bg-[indianred] text-white font-semibold p-8 rounded-lg hover:cursor-pointer hover:bg-red-500 duration-200'>
-        <span className='text-5xl italic'>200+</span>
+        <span className='text-5xl italic'>{userData.length}</span>
         <p className='mt-3 text-2xl text-gray-300 font-serif'>Total Users</p>
       </div>
       <div className='bg-purple-600 text-white font-semibold p-8 rounded-lg hover:cursor-pointer hover:bg-purple-700 duration-200'>
-        <span className='text-5xl italic'>100+</span>
+        <span className='text-5xl italic'>{gamesData.length}</span>
         <p className='mt-3 text-2xl text-gray-300 font-serif'>Total Games</p>
       </div>
       <div className='bg-green-600 text-white font-semibold p-8 rounded-lg hover:cursor-pointer hover:bg-green-700 duration-200'>

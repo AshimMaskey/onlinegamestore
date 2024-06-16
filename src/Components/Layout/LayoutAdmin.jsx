@@ -6,15 +6,15 @@ import AdminContext from '../Context/AdminContext';
 
 function LayoutAdmin() {
   const navigate = useNavigate();
-  const { isLoggedIn } = useContext(AdminContext);
+  const { isLoggedIn, admin } = useContext(AdminContext);
 
   useEffect(() => {
-    if (!isLoggedIn) {
+    if (!admin) {
       navigate('/Admin/Signin');
     }
-  }, [isLoggedIn]); 
+  }, [admin]); 
 
-  return isLoggedIn ? (
+  return admin ? (
     <div className="flex">
       <div>
         <AdminSideBar />

@@ -1,4 +1,4 @@
-import {useContext, useState} from 'react';
+import {useContext, useEffect, useState} from 'react';
 import { toast } from 'react-toastify';
 import FormInput from './FormInput'
 import {logo} from '../../assets/images'
@@ -15,10 +15,12 @@ function Signin() {
   })
   const navigate=useNavigate();
   
-  if(user)
-  {
-    return navigate('/Account');
-  }
+  useEffect(()=>{
+    if(user)
+    {
+      return navigate('/Account');
+    }
+  })
   const inputs=[
     {
       id:1,

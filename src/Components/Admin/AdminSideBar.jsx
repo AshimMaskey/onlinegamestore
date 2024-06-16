@@ -1,11 +1,12 @@
 import React from 'react'
 import {  NavLink } from 'react-router-dom'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faChartLine, faClockRotateLeft, faComments, faGamepad, faNewspaper, faUser } from '@fortawesome/free-solid-svg-icons'
+import { faChartLine, faClockRotateLeft, faComments, faGamepad, faNewspaper, faTableCells, faUser } from '@fortawesome/free-solid-svg-icons'
 
 function AdminSideBar() {
   const navItems=[
 		{link:"Dashboard", path:"/Admin/Dashboard", icon: faChartLine},
+    {link:'Section Management', path:"/Admin/Section", icon: faTableCells},
 		{link:"Game Management", path:"/Admin/Game", icon: faGamepad},
 		{link:"News Management", path:"/Admin/News", icon: faNewspaper},
 		{link:"User/Admin", path:"/Admin/User", icon: faUser},

@@ -25,6 +25,8 @@ import FreeGames from './Components/FreeGames/FreeGames.jsx'
 import PaidGames from './Components/PaidGames/PaidGames.jsx'
 import Account from './Components/Account/Account.jsx'
 import Cart from './Components/Cart/Cart.jsx'
+import Section from './Components/Admin/SectionManagement/Section';
+import AdminProfile from './Components/Admin/AdminProfile';
 
 
 
@@ -47,7 +49,9 @@ const router=createBrowserRouter(
       <Route path='/Signup' element={<Signup />}/>
     
       <Route path='/Admin' element={<LayoutAdmin/>}>
+        <Route path='' element={<AdminProfile/>}/>
         <Route path='/Admin/Dashboard' element={<AdminDashboard/>}/>  
+        <Route path='/Admin/Section' element={<Section/>}/>
         <Route path='/Admin/User' element={<AdminHome/>}/>
         <Route path='/Admin/News' element={<AdminNews/>}/>
         <Route path='/Admin/Game' element={<AdminGames/>}/>

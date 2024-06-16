@@ -11,13 +11,12 @@ function Section3() {
 	const freeGames= gamesData.filter((game)=>game.price==0);
 	const totalGamesToShow=3;
 	const freeGames1=freeGames.slice(0, totalGamesToShow);
-	console.log(freeGames1);
   return (
 	<>
-	<div className='w-[80%] mx-auto bg-[#2A2A2A] mb-32'>
+	<div className='w-[90%] md:w-[80%] mx-auto bg-[#2A2A2A] mb-32'>
 		<div className='flex flex-col p-10'>
-			<div className='flex justify-between'>
-				<div className='flex text-2xl text-white'>
+			<div className='flex justify-between items-center'>
+				<div className='flex text-xl md:text-2xl text-white'>
 					<div>
 						<FontAwesomeIcon icon={faGift} />
 					</div>
