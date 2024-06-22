@@ -1,4 +1,5 @@
 import React from 'react'
+import { Auth0Provider } from '@auth0/auth0-react';
 import ReactDOM from 'react-dom/client'
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
@@ -27,8 +28,9 @@ import Account from './Components/Account/Account.jsx'
 import Cart from './Components/Cart/Cart.jsx'
 import Section from './Components/Admin/SectionManagement/Section';
 import AdminProfile from './Components/Admin/AdminProfile';
-
-
+import Payment from './Components/Cart/Payment';
+import Download from './Components/Download/download';
+import PaymentDetails from './Components/PaymentDetails/PaymentDetails';
 
 const router=createBrowserRouter(
   createRoutesFromElements(
@@ -44,6 +46,8 @@ const router=createBrowserRouter(
       <Route path='/PaidGames' element={<PaidGames />}/>
       <Route path='/Account' element={<Account />}/>
       <Route path='/Cart' element={<Cart/>}/>
+      <Route path='/Payment' element={<Payment/>}/>
+      <Route path='Download' element={<Download/>}/>
     </Route>
       <Route path='/Signin'  element={<Signin />}/>
       <Route path='/Signup' element={<Signup />}/>
@@ -55,6 +59,8 @@ const router=createBrowserRouter(
         <Route path='/Admin/User' element={<AdminHome/>}/>
         <Route path='/Admin/News' element={<AdminNews/>}/>
         <Route path='/Admin/Game' element={<AdminGames/>}/>
+        <Route path='/Admin/PaymentDetails' element={<PaymentDetails/>}/>
+
       </Route>
       <Route path='/Admin/Signup' element={<AdminSignup/>}/>
       <Route path='/Admin/Signin' element={<AdminSignin/>}/>   
@@ -64,9 +70,19 @@ const router=createBrowserRouter(
 
 ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>
-    <AdminContextProvider>
+   
+    <Auth0Provider
+    domain="dev-62f7reim3cg0j6p2.us.auth0.com"
+    clientId="JHw3hZRinwHJnjTielCZq8l1fJG3NHHF"
+    authorizationParams={{
+      redirect_uri: window.location.origin
+    }}
+  >
+     <AdminContextProvider>
       <RouterProvider router={router} />
     </AdminContextProvider>
     <ToastContainer />
+   
+  </Auth0Provider>
   </React.StrictMode>,
 )

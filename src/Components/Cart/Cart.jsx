@@ -80,7 +80,11 @@ const Cart = () => {
       <div className='text-center lg:flex items-center mx-2 justify-between mt-5'>
         <div><h1 className='text-white text-xl '>Total Items: <span className='font-normal text-gray-200'>{cart.length}</span></h1></div>
         <div><h1 className='text-white text-xl '>Total Price: <span className='font-normal text-gray-200'>Rs. {totalPrice}</span></h1></div>
-        <div className='mt-1 lg:mt-0'><button className='text-white text-lg bg-green-600 hover:bg-green-700 cursor-pointer duration-200 px-2 py-1 rounded-md'>Proceed to Checkout</button></div>
+        <div className='mt-1 lg:mt-0'>
+              <Link to='/Payment'>
+              <button className='text-white text-lg bg-green-600 hover:bg-green-700 cursor-pointer duration-200 px-2 py-1 rounded-md'>Proceed to Checkout</button>
+              </Link>
+        </div>
       </div>
     </div>:
     (

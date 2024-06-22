@@ -184,23 +184,25 @@ const handleDeleteCartItem=(game_id)=>{
             });
     }, []);
 	const handleDelete = (news_id) => {  
-
-        fetch(`http://localhost/onlinegamestore/admin/deletenews.php?news_id=${news_id}`, {
-          method: 'DELETE',
-          headers: {
-            'Content-Type': 'application/json',	
-          },
+    const result=confirm('Do you want to delete this news?');
+    if(result){
+      fetch(`http://localhost/onlinegamestore/admin/deletenews.php?news_id=${news_id}`, {
+        method: 'DELETE',
+        headers: {
+          'Content-Type': 'application/json',	
+        },
+      })
+        .then(response => {
+          if (response.ok) {
+            console.log(`news with ID ${news_id} deleted successfully`);
+            const updatedNewsData = newsData.filter(news => news.news_id !== news_id);
+            setNewsData(updatedNewsData);
+          } else {
+            console.error(`Failed to delete news with ID ${news_id}}`);
+          }
         })
-          .then(response => {
-            if (response.ok) {
-              console.log(`news with ID ${news_id} deleted successfully`);
-              const updatedNewsData = newsData.filter(news => news.news_id !== news_id);
-              setNewsData(updatedNewsData);
-            } else {
-              console.error(`Failed to delete news with ID ${news_id}}`);
-            }
-          })
-          .catch(error => console.error('error deleting news', error));
+        .catch(error => console.error('error deleting news', error));
+    }
       };
 
 
@@ -240,11 +242,36 @@ const handleDeleteCartItem=(game_id)=>{
 
     };
 
+    //for payments and payments_items
+       const [paymentsData, setPaymentsData] = useState([]);
+       useEffect(() => {
+         fetch('http://localhost/onlinegamestore/payment/fetchpayments.php')
+             .then(response => response.json())
+             .then(data => {
+                 setPaymentsData(data);
+             })
+             .catch(error => {
+                 console.error('Error fetching games data:', error);
+             });
+     }, []);
+    
+       const [payment_items, setPayment_items] = useState([]);
+       useEffect(() => {
+         fetch('http://localhost/onlinegamestore/payment/fetchpaymentitems.php')
+             .then(response => response.json())
+             .then(data => {
+                 setPayment_items(data);
+             })
+             .catch(error => {
+                 console.error('Error fetching games data:', error);
+             });
+     }, []);
+
 
 
 	return(
 		<>
-		<AdminContext.Provider value={{ newsData, setNewsData, handleDelete, handleDelete2, gamesData, setGamesData,adminLogin,adminLogout,admin,setAdmin, userLogin,userLogout, user, setUser, handleAddToCart, setCart, cart, handleDeleteCartItem}}>
+		<AdminContext.Provider value={{ newsData, setNewsData, handleDelete, handleDelete2, gamesData, setGamesData,adminLogin,adminLogout,admin,setAdmin, userLogin,userLogout, user, setUser, handleAddToCart, setCart, cart, handleDeleteCartItem, paymentsData, payment_items}}>
 			{children}
 		</AdminContext.Provider>
 		</>

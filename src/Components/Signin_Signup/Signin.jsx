@@ -5,9 +5,15 @@ import {logo} from '../../assets/images'
 import Button4 from '../Buttons/Button4'
 import { Link, useNavigate} from 'react-router-dom';
 import AdminContext from '../Context/AdminContext';
+import { useAuth0 } from "@auth0/auth0-react";
 
 function Signin() {  
-  const {userLogin, user}= useContext(AdminContext);
+  const { loginWithRedirect, logout, isAuthenticated } = useAuth0();
+  if(isAuthenticated){
+    console.log(isAuthenticated);
+  }
+  const {userLogin,user}= useContext(AdminContext);
+
   const [error,setError]=useState('');
   const [values, setValues]=useState({
     username:"",
@@ -103,6 +109,10 @@ function Signin() {
         <div>No Account? <Link className='border-b-[1px] hover:cursor-pointer hover:text-green-600 hover:border-green-600 duration-200 border-black' to='/Signup'> Create one!</Link></div>
       </div>
       <Button4 value="Sign in"/>
+      {/* <div className='cursor-pointer bg-white border-2 mt-3 rounded-md border-gray-600' onClick={()=>loginWithRedirect()}>Log In</div>
+      <div className='cursor-pointer bg-white border-2 mt-3 rounded-md border-gray-600' onClick={() => logout({ logoutParams: { returnTo: window.location.origin } })}>Log out
+      </div> */}
+    {/* <button onClick={() => loginWithRedirect()}>Log In</button> */}
     </form>
   </div>
   </>

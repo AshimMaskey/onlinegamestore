@@ -41,16 +41,19 @@ function Section1() {
 
   return (
     <>
-    <div className='flex justify-center my-3'>
+    <div className='my-3 ml-10'>
       <h1 className='text-white text-3xl'>Select Games:</h1>
     </div>
-      <div className="overflow-x-auto flex justify-center">
+      <div className="overflow-x-auto ml-10">
         <div className=" text-center inline-block">
-          <table className="min-w-full bg-white shadow-md rounded-lg overflow-hidden dark:bg-gray-900">
+          <table className="bg-white shadow-md rounded-lg overflow-hidden dark:bg-gray-900">
             <thead className="dark:bg-black">
               <tr>
                 <th className="px-6 py-3 bg-black text-white text-left text-md md:text-lg leading-4 font-medium uppercase tracking-wider">
-                  ID
+                  SN
+                </th>
+                <th className="px-6 py-3 bg-black text-white text-left text-md md:text-lg leading-4 font-medium uppercase tracking-wider">
+                  Game_ID
                 </th>
                 <th className="px-6 py-3 bg-black text-white text-left text-md md:text-lg leading-4 font-medium uppercase tracking-wider">
                   Game
@@ -69,6 +72,9 @@ function Section1() {
             <tbody className="dark:bg-gray-800">
               {currentGames.map((item, index) => (
                 <tr key={index} className={index % 2 === 0 ? 'bg-gray-950 dark:bg-gray-950' : 'bg-gray-900 dark:bg-gray-900'}>
+                  <td className="px-6 py-4 whitespace-no-wrap text-md md:text-lg leading-5 text-white">
+                    {indexOfFirstGame + index + 1}
+                  </td>
                   <td className="px-6 py-4 whitespace-no-wrap text-md md:text-lg leading-5 text-white">
                     {item.game_id}
                   </td>

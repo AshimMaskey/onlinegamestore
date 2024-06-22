@@ -128,7 +128,21 @@ function Form({onClose}) {
                         required
                     />
                 </div>
-                <button className='bg-green-600 hover:bg-green-700 duration-200 cursor-pointer w-full rounded-md py-2 text-lg text-white' type="submit">Save Changes</button>
+                <div className="flex justify-end">
+          <button
+            type="button"
+            onClick={() => onClose(false)}
+            className="mr-2 px-4 py-2 text-lg font-medium text-gray-700 bg-gray-200 hover:bg-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-gray-400"
+          >
+            Cancel
+          </button>
+          <button
+            type="submit"
+            className="px-4 py-2 text-lg font-medium text-white bg-blue-600 hover:bg-blue-700 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+          >
+            Save Changes
+          </button>
+        </div>
             </form>
 	</div>
   )
