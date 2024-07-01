@@ -26,14 +26,14 @@ function Footer() {
           <FontAwesomeIcon onClick={scrollToTop} className='hover:text-[aqua] hover:cursor-pointer duration-300' icon={faArrowUp} />
         </div>
       </div>
-      <div className='text-white max-w-2xl mx-10 md:mx-20 text-sm'>
+      <div className='text-white max-w-2xl pb-5 mx-10 md:mx-20 text-sm'>
         <p>© 2024, Game Vortex, Inc. All rights reserved. <br />
         <br />
         Our website may contain links to other sites and resources provided by third parties. These links are provided for your convenience only. Game Vortex has no control over the contents of those sites or resources, and accepts no responsibility for them or for any loss or damage that may arise from your use of them.</p>
       </div>
-      <div className=' mx-10 md:mx-20 pb-5 mt-4 '>
+      {/* <div className=' mx-10 md:mx-20 pb-5 mt-4 '>
         <Link to="customerservice" className='text-white border-b-2 border-white hover:text-blue-500 hover:border-blue-500 duration-300'>Customer Service</Link>
-      </div>
+      </div> */}
     </div>
     </>
   );
