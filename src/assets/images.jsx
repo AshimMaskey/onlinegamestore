@@ -12,6 +12,7 @@ import clashofclans1 from "./clashofclans1.jpg";
 import logo from "./logo.png"
 import userimg from "./user.jfif"
 import empty from "./empty.jfif"
+import esewa from "./esewa.png"
 
 export {
     mlbb,
@@ -27,5 +28,6 @@ export {
     clashofclans1, 
     logo,
     userimg,
-    empty
+    empty,
+    esewa
 };

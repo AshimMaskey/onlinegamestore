@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom';
 import { exportToExcel, exportToPDF } from '@/Components/pdf_excel/ExportUtils';
 import EditForm from '../AdminProfileUpdate/EditForm';
 import GameUpdate from './GameUpdate';
+import Confirm from '@/Components/Confirm/Confirm';
 
 function ViewGames() {
   const { gamesData, handleDelete2 } = useContext(AdminContext);
@@ -44,6 +45,21 @@ function ViewGames() {
     setCurrentGame(game);
     setShowModal(true);
   };
+
+  const [isOpenConfirm, setIsOpenConfirm]=useState(false);
+  const [game_id, setGameId]=useState(null);
+  const handleDelete=(gameid)=>{
+    setIsOpenConfirm(true);
+    setGameId(gameid);
+
+  }
+  const handleCancel=()=>{
+      setIsOpenConfirm(false);
+  }
+  const handleConfirm=()=>{
+    handleDelete2(game_id);
+    setIsOpenConfirm(false);
+  }
 
   return (
     <>
@@ -110,7 +126,7 @@ function ViewGames() {
                       </button>
                     </Link>
                     <button
-                      onClick={() => handleDelete2(game.game_id)}
+                      onClick={() => handleDelete(game.game_id)}
                       className="bg-red-700 border-gray-800 border-2 rounded-lg text-white px-2 py-1 hover:cursor-pointer hover:bg-red-600 duration-200 "
                     >
                       Delete
@@ -147,6 +163,7 @@ function ViewGames() {
           </div>
         </div>
       </div>
+      <Confirm message="Delete the game permanently?" onCancel={handleCancel} onConfirm={handleConfirm} isOpen={isOpenConfirm}/>
       <EditForm isVisible={showModal} onClose={setShowModal}>
         <GameUpdate game={currentGame} onClose={setShowModal} />
       </EditForm>

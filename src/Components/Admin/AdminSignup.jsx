@@ -126,7 +126,7 @@ const {admin}=useContext(AdminContext);
   const onChange=(e)=>{
     setValues({...values, [e.target.name]: e.target.value})
   }
-  
+    
   return (
 	<>
   <div className=' flex justify-center items-center my-10'>
@@ -141,11 +141,9 @@ const {admin}=useContext(AdminContext);
         ))
       }
       {error && <div className='text-red-500'>{error}</div>}
-      {/* <div className='mb-5'>
-        <div>Already have an Account? <Link className='border-b-[1px] hover:cursor-pointer hover:text-green-600 hover:border-green-600 duration-200 border-black' to='/Admin/Signin'> Sign in!</Link></div>
-      </div> */}
-      <Button4 value="Sign up"/>
+      <Button4 value="Add Admin"/>
     </form>
+
   </div>
   </>
   )

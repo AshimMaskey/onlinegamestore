@@ -1,17 +1,31 @@
-import React, { useContext } from 'react'
+import React, { useContext,useState } from 'react'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faUserTie, faArrowRightFromBracket, faUser } from '@fortawesome/free-solid-svg-icons';
 import { Link } from 'react-router-dom';
 import AdminContext from '../Context/AdminContext';
+import Confirm from '../Confirm/Confirm';
+import { showToast } from '../toast/toast';
 
 function AdminHeader() {
   const {adminLogout}=useContext(AdminContext);
-  const handleLogout=()=>{
-    const result=confirm("Are you sure you want to log out?");
-    if(result){
-      adminLogout();
-    }
+  const [isOpenConfirm, setIsOpenConfirm]=useState(false);
+  const handleLogout = () => {
+    setIsOpenConfirm(true);
+  };
+  const handleConfirm=()=>{
+    adminLogout();
+    showToast({message:'Logged Out Successfully!!', condition:'success'});
   }
+  const handleCancel=()=>{
+    setIsOpenConfirm(false);    
+  }
+
+  // const handleLogout=()=>{
+  //   const result=confirm("Are you sure you want to log out?");
+  //   if(result){
+  //     adminLogout();
+  //   }
+  // }
   return (
 	<>
   <div className='flex sticky top-0 justify-between bg-[#18181C] px-5 py-5 items-center'>
@@ -24,6 +38,7 @@ function AdminHeader() {
       <div onClick={handleLogout} className='flex items-center hover:cursor-pointer hover:border-b-2 border-white ml-8'><FontAwesomeIcon className='text-xl text-white ' icon={faArrowRightFromBracket} /><p className='text-white text-lg ml-2'>Log Out</p></div>
     </div>
   </div>
+  <Confirm message="Do you want to log out?" onCancel={handleCancel} onConfirm={handleConfirm} isOpen={isOpenConfirm}/>
   </>
   )
 }

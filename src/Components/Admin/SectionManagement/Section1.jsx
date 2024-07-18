@@ -1,8 +1,12 @@
 import AdminContext from '@/Components/Context/AdminContext';
 import React, { useContext, useEffect, useState } from 'react';
+import { toast } from 'react-toastify';
+import { showToast } from '@/Components/toast/toast';
+import Confirm from '@/Components/Confirm/Confirm';
 
 function Section1() {
   const { gamesData } = useContext(AdminContext);
+  const [isOpen, setIsOpen]=useState(false);
   const [selectedGames, setSelectedGames] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
   const [itemsPerPage] = useState(5);
@@ -21,15 +25,24 @@ function Section1() {
       if (selectedGames.length < 5) {
         setSelectedGames([...selectedGames, game_id]);
       } else {
-        alert('You can only select 5 games for the slider');
+        showToast({message:'You can only select 5 games', condition:'error'});
       }
     }
   };
 
   const handleClick = () => {
-    localStorage.setItem('selectedGames', JSON.stringify(selectedGames));
-    alert('Saved in local storage');
+    setIsOpen(true);
   };
+
+  const handleConfirm=()=>{
+    localStorage.setItem('selectedGames', JSON.stringify(selectedGames));
+    setIsOpen(false);
+    showToast({message:'Changes saved successfullly!', condition:'success'});
+
+  }
+  const handleCancel=()=>{
+    setIsOpen(false);
+  }
 
   const indexOfLastGame = currentPage * itemsPerPage;
   const indexOfFirstGame = indexOfLastGame - itemsPerPage;
@@ -42,9 +55,9 @@ function Section1() {
   return (
     <>
     <div className='my-3 ml-10'>
-      <h1 className='text-white text-3xl'>Select Games:</h1>
+      <h1 className='text-white text-center text-3xl'>Select Games:</h1>
     </div>
-      <div className="overflow-x-auto ml-10">
+      <div className="overflow-x-auto flex justify-center ml-10">
         <div className=" text-center inline-block">
           <table className="bg-white shadow-md rounded-lg overflow-hidden dark:bg-gray-900">
             <thead className="dark:bg-black">
@@ -132,6 +145,7 @@ function Section1() {
           </div>
         </div>
       </div>
+      <Confirm message="Do you want to save the changes?" isOpen={isOpen} onCancel={handleCancel} onConfirm={handleConfirm}/>
     </>
   );
 }

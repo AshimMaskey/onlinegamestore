@@ -1,9 +1,16 @@
-import React, { useContext, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import AdminContext from '../Context/AdminContext';
 import { Link } from 'react-router-dom';
+import Loading from '../Loading/Loading';
 
 function Store() {
+  
   const { gamesData } = useContext(AdminContext);
+  const [loading, setLoading]=useState(true);
+  useEffect(()=>{
+setLoading(false);
+
+  }),[gamesData];
   const [selectedGenre, setSelectedGenre] = useState('');
   const [currentPage, setCurrentPage] = useState(1);
   const gamesPerPage = 6;
@@ -26,7 +33,11 @@ function Store() {
   const totalPages = Math.ceil(filteredGames.length / gamesPerPage);
 
   const paginate = (pageNumber) => setCurrentPage(pageNumber);
-
+  if(loading){
+    return(
+      <Loading/>
+    )
+  }
   return (
     <>
       <div className='flex mt-10 mx-auto flex-wrap justify-between max-w-5xl'>

@@ -6,27 +6,24 @@ import { toast } from 'react-toastify';
 import EditForm from './EditForm';
 import Form from './Form';
 import { Separator } from '../ui/separator';
+import Confirm from '../Confirm/Confirm';
+import { showToast } from '../toast/toast';
 function Account() {
   const { userLogout, user } = useContext(AdminContext);
+  const [isOpenConfirm, setIsOpenConfirm]=useState(false);
   console.log(user);
   const [showModal, setShowModal]=useState(false);
 
   const handleLogout = () => {
-    const result = window.confirm('Are you sure you want to log out?');
-    if (result) {
-      userLogout();
-      toast.success('Logged Out Successfully!', {
-        position: "top-right",
-        autoClose: 5000,
-        hideProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: true,
-        progress: undefined,
-        theme: "light",
-        });
-    }
+    setIsOpenConfirm(true);
   };
+  const handleConfirm=()=>{
+    userLogout();
+    showToast({message:'Logged Out Successfully', condition:'success'});
+  }
+  const handleCancel=()=>{
+    setIsOpenConfirm(false);
+  }
 
   if (!user) {
     return <Navigate to="/Signin" />;
@@ -59,6 +56,7 @@ function Account() {
     <EditForm isVisible={showModal} onClose={setShowModal} >
       <Form onClose={setShowModal} />
     </EditForm>
+    <Confirm message="Do you want to log out?" onCancel={handleCancel} onConfirm={handleConfirm} isOpen={isOpenConfirm}/>
 	</>
   );
 }

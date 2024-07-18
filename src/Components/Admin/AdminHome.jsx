@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { exportToExcel, exportToPDF } from '../pdf_excel/ExportUtils';
+import Confirm from '../Confirm/Confirm';
+import { showToast } from '../toast/toast';
 
 function AdminHome() {
   const [adminData, setAdminData] = useState([]);
@@ -31,9 +33,7 @@ function AdminHome() {
       .catch(error => console.error('error fetching data', error));
   }, []);
 
-  const handleDelete = userId => {
-    const result = confirm('Are you sure you want to delete this user?');
-    if (result) {
+  const handleDelete2 = userId => {    
       fetch(`http://localhost/onlinegamestore/admin/deleteuser.php?id=${userId}`, {
         method: 'DELETE',
         headers: {
@@ -45,19 +45,18 @@ function AdminHome() {
             console.log(`User with ID ${userId} deleted successfully`);
             const updatedUserData = userData.filter(user => user.user_id !== userId);
             setUserData(updatedUserData);
-            alert('User deleted successfully');
+            showToast({message:"User deleted succesfully!!", condition:"success"});
           } else {
             console.error(`Failed to delete user with ID ${userId}`);
           }
         })
-        .catch(error => console.error('error deleting user', error));
-    }
+        .catch(error => console.error('error deleting user', error));   
   };
 
+  
   const disable_enable = (id, status) => {
-    const action = status == 1 ? 'Disable' : 'Enable';
-    const result = window.confirm(`${action} User?`);
-    if (result) {
+    
+    
       fetch('http://localhost/onlinegamestore/admin/update_user_status.php', {
         method: 'POST',
         headers: {
@@ -74,7 +73,7 @@ function AdminHome() {
           }
         })
         .catch(error => console.error('Error updating user status', error));
-    }
+    
   };
 
   const indexOfLastUser = currentPage * itemsPerPage;
@@ -103,6 +102,41 @@ function AdminHome() {
     if(result){
       exportToExcel(userData, columns);
     }
+  }
+  
+  //for deleting the user confirm box
+  const [isOpenConfirm, setIsOpenConfirm]=useState(false);
+  const [user_id, setUserId]=useState(null);
+  const handleDelete=(userid)=>{
+    setIsOpenConfirm(true);
+    setUserId(userid);
+  }
+  const handleCancel=()=>{
+      setIsOpenConfirm(false);
+  }
+  const handleConfirm=()=>{
+    setIsOpenConfirm(false);
+    handleDelete2(user_id);
+  }
+
+  //for enable/disable user confirm box
+  const [isOpenConfirm1, setIsOpenConfirm1]=useState(false);
+  const [user_id1, setUserId1]=useState(null);
+  const [user_status, setUserStatus]=useState(null);
+  const [actionValue, setActionValue]=useState(null);
+  const handleClick=(userid, userstatus)=>{
+    const action = userstatus == 1 ? 'Disable' : 'Enable';
+    setActionValue(action);
+    setIsOpenConfirm1(true);
+    setUserId1(userid);
+    setUserStatus(userstatus);
+  }
+  const handleCancel1=()=>{
+      setIsOpenConfirm1(false);
+  }
+  const handleConfirm1=()=>{
+    setIsOpenConfirm1(false);
+    disable_enable(user_id1,user_status);
   }
 
   return (
@@ -143,11 +177,11 @@ function AdminHome() {
                   ))}
                   <td className="px-6 py-4 whitespace-no-wrap text-md md:text-md leading-5 text-white">
                     {user.status == 1 ? (
-                      <button onClick={() => disable_enable(user.user_id, user.status)} className='bg-gray-700 hover:bg-gray-600 border-gray-800 border-2 duration-200 px-2 py-1 rounded-lg mr-1'>
+                      <button onClick={() => handleClick(user.user_id, user.status)} className='bg-gray-700 hover:bg-gray-600 border-gray-800 border-2 duration-200 px-2 py-1 rounded-lg mr-1'>
                         Disable
                       </button>
                     ) : (
-                      <button onClick={() => disable_enable(user.user_id, user.status)} className='bg-green-700 hover:bg-green-600 border-gray-800 border-2 duration-200 px-2 py-1 rounded-lg mr-1'>
+                      <button onClick={() => handleClick(user.user_id, user.status)} className='bg-green-700 hover:bg-green-600 border-gray-800 border-2 duration-200 px-2 py-1 rounded-lg mr-1'>
                         Enable
                       </button>
                     )}
@@ -186,6 +220,8 @@ function AdminHome() {
           </div>
         </div>
       </div>
+      <Confirm message={`${actionValue} user?`} onCancel={handleCancel1} onConfirm={handleConfirm1} isOpen={isOpenConfirm1}/>
+      <Confirm message="Delete the user permanently?" onCancel={handleCancel} onConfirm={handleConfirm} isOpen={isOpenConfirm}/>
     </>
   );
 }

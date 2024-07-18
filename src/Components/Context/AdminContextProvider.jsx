@@ -3,6 +3,7 @@ import { toast } from "react-toastify";
 import { useState,useEffect } from "react";
 import AdminContext from "./AdminContext"; 
 import { Navigate } from "react-router-dom";
+import { showToast } from "../toast/toast";
 const AdminContextProvider=({children})=>{
 
   // FOR LOGIN OF ADMIN AND ADMIN DATA
@@ -52,8 +53,6 @@ const AdminContextProvider=({children})=>{
   const handleAddToCart = (game_id) => {
    if(user)
    {
-    if(confirm('Add to Cart?'))
-    {
       fetch('http://localhost/onlinegamestore/user/addtocart.php', {
             method: 'POST',
             headers: {
@@ -103,7 +102,6 @@ const AdminContextProvider=({children})=>{
             }
         })
         .catch(error => console.error('Error adding game to cart:', error));
-    }
    }
    else{
     toast.error('You should be Signed in first!!', {
@@ -134,8 +132,6 @@ useEffect(() => {
 }, [user,cartUpdated]);
 
 const handleDeleteCartItem=(game_id)=>{
-  if(confirm('Are you sure you want to delete the item from cart?'))
-  {
     fetch(`http://localhost/onlinegamestore/user/deletecartitem.php`, {
       method: 'DELETE',
       headers: {
@@ -165,7 +161,6 @@ const handleDeleteCartItem=(game_id)=>{
       }
     })
     .catch(error => console.error('Error deleting game from cart:', error));
-  }
 }
 
 
@@ -184,8 +179,7 @@ const handleDeleteCartItem=(game_id)=>{
             });
     }, []);
 	const handleDelete = (news_id) => {  
-    const result=confirm('Do you want to delete this news?');
-    if(result){
+    
       fetch(`http://localhost/onlinegamestore/admin/deletenews.php?news_id=${news_id}`, {
         method: 'DELETE',
         headers: {
@@ -197,12 +191,13 @@ const handleDeleteCartItem=(game_id)=>{
             console.log(`news with ID ${news_id} deleted successfully`);
             const updatedNewsData = newsData.filter(news => news.news_id !== news_id);
             setNewsData(updatedNewsData);
+            showToast({message:'news deleted successfully', condition:'success'});
           } else {
             console.error(`Failed to delete news with ID ${news_id}}`);
           }
         })
         .catch(error => console.error('error deleting news', error));
-    }
+
       };
 
 
@@ -219,10 +214,8 @@ const handleDeleteCartItem=(game_id)=>{
                 console.error('Error fetching games data:', error);
             });
     }, []);
-    const handleDelete2 = (game_id) => { 
-      const result=confirm('Are you sure you want to delete the game?');
-      if(result){
-        fetch(`http://localhost/onlinegamestore/admin/deletegames.php?game_id=${game_id}`, {
+    const handleDelete2 = (game_id) => {  
+              fetch(`http://localhost/onlinegamestore/admin/deletegames.php?game_id=${game_id}`, {
           method: 'DELETE',
           headers: {
             'Content-Type': 'application/json',	
@@ -238,8 +231,6 @@ const handleDeleteCartItem=(game_id)=>{
             }
           })
           .catch(error => console.error('error deleting game', error));
-      }
-
     };
 
     //for payments and payments_items

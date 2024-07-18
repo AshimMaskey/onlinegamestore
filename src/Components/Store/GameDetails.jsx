@@ -1,17 +1,30 @@
-import React, { useContext } from 'react'
+import React, { useContext, useState } from 'react'
 import AdminContext from '../Context/AdminContext'
 import { useParams } from 'react-router-dom';
+import Confirm from '../Confirm/Confirm';
+import Loading from '../Loading/Loading';
 
 function GameDetails() {
 	const {gameid}= useParams();
 	const {gamesData, handleAddToCart}=useContext(AdminContext);
+	const [isOpenConfirm, setIsOpenConfirm]=useState(false);
+	const [gameId, setGameId]=useState(null);
+	const handleAdd=(game_id)=>{
+		setIsOpenConfirm(true);
+		setGameId(game_id)
+	}
+	const handleConfirm=()=>{
+		handleAddToCart(gameId);
+		setIsOpenConfirm(false);
+	}
+	const handleCancel=()=>{
+		setIsOpenConfirm(false);
+	}
 	const game= gamesData && gamesData.find(game=>game.game_id===gameid)
 	console.log(game);
 	if (!game) {
 		return (
-		  <div className="text-white">
-			Loading...
-		  </div>
+		  <Loading />
 		);
 	  }
 
@@ -40,10 +53,11 @@ function GameDetails() {
 				<span className='text-white italic'> {game.price}</span>
 			</div>
 			<div className='mt-10'>
-				<button onClick={()=>handleAddToCart(game.game_id)} className='cursor-pointer bg-white text-black py-1 px-2 rounded-sm hover:bg-gray-200 duration-200'>Add to Cart</button>
+				<button onClick={()=>handleAdd(game.game_id)} className='cursor-pointer bg-white text-black py-1 px-2 rounded-sm hover:bg-gray-200 duration-200'>Add to Cart</button>
 			</div>
 		</div>
 	</div>
+	<Confirm message="Add the game to cart?" onCancel={handleCancel} onConfirm={handleConfirm} isOpen={isOpenConfirm}/>
 	</>
   )
 }

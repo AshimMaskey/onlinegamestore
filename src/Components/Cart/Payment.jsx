@@ -1,5 +1,6 @@
 import React, { useState, useContext, useEffect } from 'react';
 import AdminContext from '../Context/AdminContext';
+import { esewa } from '@/assets/images';
 
 const generateUUID = () => {
     const timestamp = new Date().getTime().toString();
@@ -61,8 +62,8 @@ const Payment = () => {
                 <input type="hidden" name="success_url" value="http://localhost:5173/download" />
                 <input type="hidden" name="failure_url" value="http://localhost:5173/Cart" />
                 <input type="hidden" name="signed_field_names" value="total_amount,transaction_uuid,product_code" />
-                <input type="hidden" name="signature" value={signature} />            
-                <button type='submit' className='text-white text-lg bg-green-600 hover:bg-green-700 cursor-pointer duration-200 px-2 py-1 rounded-md'>Pay with eSewa</button>
+                <input type="hidden" name="signature" value={signature} />                        
+                <button type='submit' className='text-white text-xl bg-green-600 hover:bg-green-700 cursor-pointer duration-200 px-2 py-2 rounded-md'><img src={esewa} className='w-40 bg-gray-100 duration-200 mb-3 rounded-lg h-20' alt="" />Pay with eSewa</button>
             </form>
         </div>
     );

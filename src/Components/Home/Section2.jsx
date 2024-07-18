@@ -2,9 +2,23 @@ import React, { useState, useEffect, useContext } from 'react';
 import Button from "../Buttons/Button";
 import AdminContext from "../Context/AdminContext";
 import { Link } from 'react-router-dom';
+import Confirm from '../Confirm/Confirm';
 
 const Section2=()=>{
 	const {gamesData, handleAddToCart}= useContext(AdminContext);
+	const [isOpenConfirm, setIsOpenConfirm]=useState(false);
+  const [gameId, setGameId]=useState(null);
+  const handleAdd=(game_id)=>{
+    setIsOpenConfirm(true);
+    setGameId(game_id)
+  }
+  const handleConfirm=()=>{
+    handleAddToCart(gameId);
+    setIsOpenConfirm(false);
+  }
+  const handleCancel=()=>{
+    setIsOpenConfirm(false);
+  }
 	const noOfGames=4;
 	const paidGames=gamesData.filter((game)=>game.price!=0);
 	const paidGames1=paidGames.slice(0,noOfGames);
@@ -31,7 +45,7 @@ return(
 							</div>
 							<div className=" flex justify-between items-center">
 								<span className="text-white text-lg font-thin italic">Rs. {game.price}</span>
-								<button onClick={()=>handleAddToCart(game.game_id)} className='text-black rounded-sm hover:bg-gray-300 duration-300 bg-white py-1 px-2'>Add to cart</button>
+								<button onClick={()=>handleAdd(game.game_id)} className='text-black rounded-sm hover:bg-gray-300 duration-300 bg-white py-1 px-2'>Add to cart</button>
 							</div>			
 					</div>
 				))
@@ -39,6 +53,7 @@ return(
 			</div>		
 		</div>
 	</div>
+	<Confirm message="Add the game to cart?" onCancel={handleCancel} onConfirm={handleConfirm} isOpen={isOpenConfirm}/>
 	</>
 )
 }

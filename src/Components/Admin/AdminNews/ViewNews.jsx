@@ -5,6 +5,7 @@ import AdminContext from '@/Components/Context/AdminContext';
 import { exportToExcel, exportToPDF } from '@/Components/pdf_excel/ExportUtils';
 import EditForm from '../AdminProfileUpdate/EditForm';
 import NewsUpdate from './NewsUpdate';
+import Confirm from '@/Components/Confirm/Confirm';
 
 function ViewNews() {
 	const [showModal, setShowModal]=useState(false);
@@ -46,6 +47,21 @@ function ViewNews() {
 		console.log(currentNewsEdit);
 
 	}
+    const [isOpenConfirm, setIsOpenConfirm]=useState(false);
+    const [news_id, setNewsId]=useState(null);
+    const handleDelete1=(newsid)=>{
+        setIsOpenConfirm(true);
+        setNewsId(newsid);
+    }
+    const handleCancel=()=>{
+        setIsOpenConfirm(false);
+    }
+    const handleConfirm=()=>{
+        handleDelete(news_id);
+        setIsOpenConfirm(false);
+    }
+
+
   return (
 	<>
 	 <div className='mb-4'>
@@ -101,7 +117,7 @@ function ViewNews() {
                                         </a>
 
                                         <button
-                                            onClick={() => handleDelete(news.news_id)}
+                                            onClick={() => handleDelete1(news.news_id)}
                                             className='bg-red-700 border-gray-800 border-2 rounded-lg text-white px-2 py-1 hover:cursor-pointer hover:bg-red-600 duration-200'
                                         >
                                             Delete
@@ -113,6 +129,7 @@ function ViewNews() {
                     </table>
                     <Pagination currentPage={currentPage} totalPages={totalPages} paginate={paginate} />
                 </div>
+                <Confirm message="Delete the news permanently?" onCancel={handleCancel} onConfirm={handleConfirm} isOpen={isOpenConfirm}/>
 				<EditForm isVisible={showModal} onClose={setShowModal}>
 					<NewsUpdate news={currentNewsEdit} onClose={setShowModal}/>
 				</EditForm>

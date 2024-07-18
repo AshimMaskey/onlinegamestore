@@ -1,3 +1,4 @@
+import { showToast } from '@/Components/toast/toast';
 import React, { useState, useEffect } from 'react';
 
 function NewsUpdate({ news, onClose }) {
@@ -35,10 +36,10 @@ function NewsUpdate({ news, onClose }) {
             });
             const result = await response.json();
             if (result.success) {
-                alert('News updated successfully!');
+               showToast({message:'News updated successfully!', condition:'success'});
                 onClose(false);
             } else {
-                alert('Failed to update news.');
+                showToast({message:'Failed to update news.', condition:'error'});
             }
         } catch (error) {
             console.error('Error updating news:', error);

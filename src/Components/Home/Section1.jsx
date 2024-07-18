@@ -2,9 +2,23 @@ import React, { useState, useEffect, useContext } from 'react';
 import Button from "../Buttons/Button";
 import AdminContext from "../Context/AdminContext";
 import { Link } from 'react-router-dom';
+import Confirm from '../Confirm/Confirm';
 
 const Section1 = () => {
   const { gamesData, handleAddToCart } = useContext(AdminContext);
+  const [isOpenConfirm, setIsOpenConfirm]=useState(false);
+  const [gameId, setGameId]=useState(null);
+  const handleAdd=(game_id)=>{
+    setIsOpenConfirm(true);
+    setGameId(game_id)
+  }
+  const handleConfirm=()=>{
+    handleAddToCart(gameId);
+    setIsOpenConfirm(false);
+  }
+  const handleCancel=()=>{
+    setIsOpenConfirm(false);
+  }
   const [sideSection, setSideSection] = useState([]);
   const [selectedGameIndex, setSelectedGameIndex] = useState(0);
 
@@ -43,7 +57,7 @@ const Section1 = () => {
                     <span className="text-white text-sm md:text-lg ">Now available</span>
                     <p className="text-white overflow-y-hidden w-2/3 h-20 text-md text-lg md:text-xl mb-4">{selectedGame.description}</p>
                     <Link to={`/Store/GameDetails/${selectedGame.game_id}`}><Button value="Learn More" /></Link>
-                    <button onClick={() => handleAddToCart(selectedGame.game_id)} className='ml-3 text-white hover:bg-slate-600 cursor-pointer duration-200 bg-gray-800 px-2 py-2 rounded-md'>Add to Cart</button>
+                    <button onClick={() => handleAdd(selectedGame.game_id)} className='ml-3 text-white hover:bg-slate-600 cursor-pointer duration-200 bg-gray-800 px-2 py-2 rounded-md'>Add to Cart</button>
                   </div>
                 }
               </div>
@@ -63,6 +77,7 @@ const Section1 = () => {
           </div>
         </div>
       </section>
+      <Confirm message="Add the game to cart?" onCancel={handleCancel} onConfirm={handleConfirm} isOpen={isOpenConfirm}/>
     </>
   )
 }

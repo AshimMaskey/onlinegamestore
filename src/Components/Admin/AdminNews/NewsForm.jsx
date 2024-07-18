@@ -1,3 +1,4 @@
+import { showToast } from '@/Components/toast/toast';
 import React, { useState } from 'react';
 
 function NewsForm({ onClose }) {
@@ -44,7 +45,7 @@ function NewsForm({ onClose }) {
     })
       .then(response => {
         console.log('Success:', response);
-        alert('Successfully added!!');
+        showToast({message:'News successfully added!!', condition:'success'});
         onClose(false);
         setFormData({
           title: '',

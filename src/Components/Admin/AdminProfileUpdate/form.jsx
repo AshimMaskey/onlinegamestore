@@ -1,11 +1,13 @@
 import AdminContext from '@/Components/Context/AdminContext';
 import React, { useContext, useState } from 'react'
-// import AdminContext from '../Context/AdminContext'
+// import AdminContext from '../Context/AdminContext';
 import { toast } from 'react-toastify';
+import Confirm from '@/Components/Confirm/Confirm';
 
 function Form({onClose}) {
 	const {admin,setAdmin}=useContext(AdminContext);
 	console.log(admin);
+
 	const [formData,setFormData]=useState({
 		admin_id:admin.admin_id,
 		admin_name:admin.admin_name || '',
@@ -15,19 +17,12 @@ function Form({onClose}) {
 		password:''
 	});
 
-	const handleChange = (e) => {
-        const { name, value } = e.target;
-        setFormData(prevState => ({
-            ...prevState,
-            [name]: value
-        }));
-    };
-
-	const handleSubmit=(e)=>{
-		e.preventDefault();
-		const result=confirm('Are you sure you want to save the changes?');
-        if(result)
-        {
+    const [isOpenConfirm, setIsOpenConfirm]=useState(false);
+    const handleCancel=()=>{
+        setIsOpenConfirm(false);
+    }
+    const handleConfirm=()=>{
+        setIsOpenConfirm(false);
             fetch('http://localhost/onlinegamestore/admin/editprofile.php',{
             method:'PUT',
             headers:{
@@ -44,7 +39,7 @@ function Form({onClose}) {
         })
         .then(data=>{
             if(data.success){
-                toast.success('Profile edited successfully!', {
+                toast.success('Profile Updated successfully!', {
                     position: "top-right",
                     autoClose: 3000,
                     hideProgressBar: false,
@@ -62,7 +57,19 @@ function Form({onClose}) {
             }
         })
         .catch(error=>console.error('error updating user', error));
-        }
+    }
+
+	const handleChange = (e) => {
+        const { name, value } = e.target;
+        setFormData(prevState => ({
+            ...prevState,
+            [name]: value
+        }));
+    };
+
+	const handleSubmit=(e)=>{
+		e.preventDefault();
+		setIsOpenConfirm(true);
 	}
   return (
 	<div className='mb-3'>
@@ -143,8 +150,10 @@ function Form({onClose}) {
             Save Changes
           </button>
         </div>
-            </form>
+        </form>
+        <Confirm message="Update Your Profile?" onCancel={handleCancel} onConfirm={handleConfirm} isOpen={isOpenConfirm}/>
 	</div>
+
   )
 }
 

@@ -3,9 +3,23 @@ import AdminContext from '../Context/AdminContext';
 import { Link, useNavigate } from 'react-router-dom';
 import { empty } from '../../assets/images';
 import { Separator } from '../ui/separator';
-
+import Confirm from '../Confirm/Confirm';
+import { useState } from 'react';
 const Cart = () => {
   const {user, cart, handleDeleteCartItem } = useContext(AdminContext);
+  const [isOpenConfirm, setIsOpenConfirm]=useState(false);
+  const [gameId, setGameId]=useState(null);
+  const handleDelete=(game_id)=>{
+    setIsOpenConfirm(true);
+    setGameId(game_id)
+  }
+  const handleConfirm=()=>{
+    handleDeleteCartItem(gameId);
+    setIsOpenConfirm(false);
+  }
+  const handleCancel=()=>{
+    setIsOpenConfirm(false);
+  }
   const sn=1;
 
   let totalPrice=0;
@@ -66,7 +80,7 @@ const Cart = () => {
                   </td>
                   <td className="px-6 py-4 whitespace-no-wrap text-md md:text-md leading-5 text-white">
                    <Link to={`/Store/GameDetails/${item.game_id}`}> <button className='text-white my-2 md:mr-3 bg-blue-600 hover:bg-blue-700 duration-200 cursor-pointer px-2 py-1 rounded-md'>View</button></Link>
-                    <button onClick={()=>handleDeleteCartItem(item.game_id)} className='text-white bg-red-600 hover:bg-red-700 duration-200 cursor-pointer px-2 py-1 rounded-md'>Remove</button>
+                    <button onClick={()=>handleDelete(item.game_id)} className='text-white bg-red-600 hover:bg-red-700 duration-200 cursor-pointer px-2 py-1 rounded-md'>Remove</button>
                   </td>
                 </tr>
               ))}
@@ -95,6 +109,7 @@ const Cart = () => {
     </div>
       )
   }
+  <Confirm message="Delete the cart item?" onCancel={handleCancel} onConfirm={handleConfirm} isOpen={isOpenConfirm}/>
 	</>
   );
 };
