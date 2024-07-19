@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 
 
@@ -7,6 +7,11 @@ function Search() {
 	const [searchResults, setSearchResults]=useState([]);
 	const [searched, setSearched]=useState(false);
 	const handleClick=()=>{
+		if (searchQuery == '') {
+			setSearchResults([]);
+			setSearched(false);
+			return;
+		}
 		fetch(`http://localhost/onlinegamestore/admin/searchgames.php?searchQuery=${searchQuery}`,
 		{
 			method:'GET',
@@ -30,6 +35,11 @@ function Search() {
 		});
 
 	};
+	useEffect(()=>{
+		if(searchQuery !==''){
+			handleClick();
+		}
+	},[searchQuery])
 	const handleKeyPress=(event)=>{
 		if(event.key=='Enter')
 		{
@@ -41,7 +51,7 @@ function Search() {
     <>   
         <div className="flex mt-20 items-center justify-center my-10">
           <div className="flex border-2 rounded bg-gray-800">
-            <input type="text" value={searchQuery} onKeyDown={handleKeyPress} onChange={(e)=>setSearchQuery(e.target.value)} className="px-5 py-3 w-3/5 md:w-80 bg-gray-800 text-white placeholder-gray-400 focus:outline-none" placeholder="Search by game name...." />
+            <input type="text" value={searchQuery} onKeyDown={handleKeyPress} onChange={(e)=>setSearchQuery(e.target.value)} className="px-5 py-3 md:w-96 bg-gray-800 text-white placeholder-gray-400 focus:outline-none" placeholder="Search by game name...." />
             <button onClick={handleClick} className="flex items-center justify-center px-4 border-l">
               <svg className="w-6 h-6 text-gray-400" fill="currentColor" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
                 <path d="M16.32 14.9l5.39 5.4a1 1 0 0 1-1.42 1.4l-5.38-5.38a8 8 0 1 1 1.41-1.41zM10 16a6 6 0 1 0 0-12 6 6 0 0 0 0 12z" />

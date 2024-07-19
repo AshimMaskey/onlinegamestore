@@ -54,7 +54,9 @@ const Header = () => {
                         {navItems2.map(({ id, link, path, icon, value }) => (
                             <NavLink
                                 key={id}
-                                className="hover:text-white hover:border-b-2 hover:border-white text-md md:text-lg mx-4 text-[#ffffffc6]"
+                                className={({ isActive }) =>
+                                    `hover:text-white ml-10 hover:border-b-2 hover:border-white text-lg text-[#ffffffc6] ${isActive ? 'border-b-2 text-white' : ''}`
+                                }
                                 to={path}
                             >
                                 {value && <span className="text-red-500 font-semibold font-mono text-md">{value}</span>}
