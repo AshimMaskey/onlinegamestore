@@ -14,7 +14,7 @@ function AdminGames() {
 	console.log(show);
   return (
 	<>
-	<div className='m-10'>
+	<div className=''>
 		<div><button onClick={()=>setShowModal(true)} className='text-white mb-3 bg-indigo-600 py-1 hover:bg-indigo-800 duration-200 px-2 rounded-md'>Add Games</button></div>
 		<div>
 			<ViewGames />

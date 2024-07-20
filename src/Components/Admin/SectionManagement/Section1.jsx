@@ -54,10 +54,10 @@ function Section1() {
 
   return (
     <>
-    <div className='my-3 ml-10'>
-      <h1 className='text-white text-center text-3xl'>Select Games:</h1>
+    <div className='my-3'>
+      <h1 className='text-white text-3xl'>Select Games:</h1>
     </div>
-      <div className="overflow-x-auto flex justify-center ml-10">
+      <div className="overflow-x-auto ">
         <div className=" text-center inline-block">
           <table className="bg-white shadow-md rounded-lg overflow-hidden dark:bg-gray-900">
             <thead className="dark:bg-black">

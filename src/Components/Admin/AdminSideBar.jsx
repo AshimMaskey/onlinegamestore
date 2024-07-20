@@ -11,15 +11,14 @@ function AdminSideBar() {
 		{link:"News Management", path:"/Admin/News", icon: faNewspaper},
 		{link:"User Details", path:"/Admin/User", icon: faUser},
 		{link:"Payment Details", path:"/Admin/PaymentDetails", icon: faClockRotateLeft},
-		// {link:"Reviews", path:"/Admin/reviews", icon: faComments},
 	]
   return (
 	<>
-  <div className='bg-[#18181C] h-[100vh] hidden md:block sticky bottom-0 top-0 px-5 py-5'>
+  <div className='bg-[#18181C] h-[100vh] hidden md:block bottom-0 top-0 px-5 py-5'>
     <div>
       <p className='text-teal-400 text-2xl font-bold text-center'>Admin Panel</p>
     </div>
-    <div className='text-white mt-10'>
+    <div className='text-white mt-4'>
       <ul>
         <li className='flex flex-col '>
        {

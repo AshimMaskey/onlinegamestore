@@ -28,17 +28,11 @@ function ViewGames() {
   ];
 
   const handleExportToPdf = () => {
-    const result = window.confirm('Export as PDF?');
-    if (result) {
-      exportToPDF(gamesData, columns);
-    }
+      exportToPDF(gamesData, columns, 'List of Games');
   };
 
   const handleExportToExcel = () => {
-    const result = window.confirm('Export as Excel?');
-    if (result) {
-      exportToExcel(gamesData, columns);
-    }
+      exportToExcel(gamesData, columns,'List of Games');
   };
 
   const handleEditClick = (game) => {

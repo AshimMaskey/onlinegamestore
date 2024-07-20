@@ -12,16 +12,18 @@ function LayoutAdmin() {
     if (!admin) {
       navigate('/Admin/Signin');
     }
-  }, [admin]); 
+  }, [admin, navigate]); 
 
   return admin ? (
-    <div className="flex">
-      <div>
-        <AdminSideBar />
-      </div>
-      <div className="flex-1">
-        <AdminHeader />
-        <Outlet />
+    <div className="flex flex-col h-screen">
+      <AdminHeader />
+      <div className="flex flex-1">
+        <div className="w-64 flex-shrink-0 hidden md:block">
+          <AdminSideBar />
+        </div>
+        <div className="flex-grow p-4 overflow-auto">
+          <Outlet />
+        </div>
       </div>
     </div>
   ) : null;

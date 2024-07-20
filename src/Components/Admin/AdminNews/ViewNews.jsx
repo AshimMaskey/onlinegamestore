@@ -28,17 +28,11 @@ function ViewNews() {
     ];
 
     const handleExportToPdf = () => {
-        const result = confirm('Export as PDF?');
-        if (result) {
-            exportToPDF(newsData, columns);
-        }
+            exportToPDF(newsData, columns, 'List of News Data');
     };
 
     const handleExportToExcel = () => {
-        const result = confirm('Export as Excel?');
-        if (result) {
-            exportToExcel(newsData, columns);
-        }
+            exportToExcel(newsData, columns, 'List of News Data');
     };
 
 	const handleEditClick=(news)=>{

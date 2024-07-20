@@ -25,25 +25,19 @@ function PaymentDetails() {
   ];
 
   const handleExportToPdf = () => {
-    const result = confirm('Export as PDF?');
-    if (result) {
-      exportToPDF(paymentsData, columns);
-    }
+      exportToPDF(paymentsData, columns, 'Payment Details');
   };
 
   const handleExportToExcel = () => {
-    const result = confirm('Export as Excel?');
-    if (result) {
-      exportToExcel(paymentsData, columns);
-    }
+      exportToExcel(paymentsData, columns, 'Payment Details');
   };
 
   return (
     <>
-      <div className='ml-10'>
+      <div className=''>
         <h1 className='text-white text-3xl my-3'>Payment Details</h1>
       </div>
-      <div className='ml-10 mb-4'>
+      <div className=' mb-4'>
         <button onClick={handleExportToPdf} className='bg-blue-500 hover:bg-blue-600 duration-200 cursor-pointer text-white px-4 py-2 rounded-lg mr-2'>
           Export to PDF
         </button>
@@ -51,7 +45,7 @@ function PaymentDetails() {
           Export to Excel
         </button>
       </div>
-      <div className="overflow-x-auto ml-10">
+      <div className="overflow-x-auto">
         <div className="inline-block">
           <table className="min-w-full bg-white shadow-md rounded-lg overflow-hidden dark:bg-gray-900">
             <thead className="dark:bg-black">

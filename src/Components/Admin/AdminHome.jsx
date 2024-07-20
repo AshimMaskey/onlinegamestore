@@ -92,16 +92,10 @@ function AdminHome() {
     { Header: 'Phone', accessor: 'phone' },
   ];
   const handleExportToPdf=()=>{
-    const result=confirm('Export as PDF?');
-    if(result){
-      exportToPDF(userData, columns);
-    }
+      exportToPDF(userData, columns, 'List of Users');
   }
   const handleExportToExcel=()=>{
-    const result=confirm('Export as Excel?');
-    if(result){
-      exportToExcel(userData, columns);
-    }
+      exportToExcel(userData, columns, 'List of Users');
   }
   
   //for deleting the user confirm box
@@ -141,10 +135,10 @@ function AdminHome() {
 
   return (
     <>
-      <div className='ml-10'>
+      <div className=''>
         <h1 className='text-white text-3xl my-3'>User List</h1>
       </div>
-      <div className='ml-10 mb-4'>
+      <div className=' mb-4'>
         <button onClick={handleExportToPdf} className='bg-blue-500 hover:bg-blue-600 duration-200 cursor-pointer text-white px-4 py-2 rounded-lg mr-2'>
           Export to PDF
         </button>
@@ -152,7 +146,7 @@ function AdminHome() {
           Export to Excel
         </button>
       </div>
-      <div className="overflow-x-auto ml-10">
+      <div className="overflow-x-auto">
         <div className="inline-block">
           <table className="min-w-full bg-white shadow-md rounded-lg overflow-hidden dark:bg-gray-900">
             <thead className="dark:bg-black">

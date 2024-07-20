@@ -8,7 +8,7 @@ const AdminNews = () => {
    const [showModal, setShowModal] = useState(false);
     return (
         <>
-            <div className='ml-10 mt-5'>
+            <div className=' mt-5'>
                 <div>
                     <button
                         onClick={() => setShowModal(true)}
