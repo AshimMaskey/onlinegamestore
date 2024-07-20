@@ -8,6 +8,10 @@ const AdminContextProvider=({children})=>{
 
   // FOR LOGIN OF ADMIN AND ADMIN DATA
   const [admin, setAdmin]=useState(null);
+  const updateAdmin=(updatedData)=>{
+    setAdmin(updatedData);
+    localStorage.setItem("adminData", JSON.stringify(updatedData));
+  }
   useEffect(() => {
     const adminData = JSON.parse(localStorage.getItem('adminData'));
     if (adminData) {
@@ -267,7 +271,7 @@ const handleDeleteCartItem=(game_id)=>{
 
 	return(
 		<>
-		<AdminContext.Provider value={{ updateUser, newsData, setNewsData, handleDelete, handleDelete2, gamesData, setGamesData,adminLogin,adminLogout,admin,setAdmin, userLogin,userLogout, user, setUser, handleAddToCart, setCart, cart, handleDeleteCartItem, paymentsData, payment_items}}>
+		<AdminContext.Provider value={{ updateUser,updateAdmin, newsData, setNewsData, handleDelete, handleDelete2, gamesData, setGamesData,adminLogin,adminLogout,admin,setAdmin, userLogin,userLogout, user, setUser, handleAddToCart, setCart, cart, handleDeleteCartItem, paymentsData, payment_items}}>
 			{children}
 		</AdminContext.Provider>
 		</>

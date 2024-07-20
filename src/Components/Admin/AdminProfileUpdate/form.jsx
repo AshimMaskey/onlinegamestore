@@ -5,7 +5,7 @@ import { toast } from 'react-toastify';
 import Confirm from '@/Components/Confirm/Confirm';
 
 function Form({onClose}) {
-	const {admin,setAdmin}=useContext(AdminContext);
+	const {admin, updateAdmin}=useContext(AdminContext);
 	console.log(admin);
 
 	const [formData,setFormData]=useState({
@@ -49,7 +49,7 @@ function Form({onClose}) {
                     progress: undefined,
                     theme: "light",
                     });
-                setAdmin({ ...admin, ...formData });
+                updateAdmin({ ...admin, ...formData });
                 onClose(false);
             }
             else{
