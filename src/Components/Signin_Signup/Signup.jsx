@@ -43,6 +43,7 @@ if(user){
       label: "Email",
       required: true,
       errorMessage:"It should be valid email address.",
+      pattern: "^([a-zA-Z\d\.-]+)@([a-zA-Z\d-]+)\.([a-zA-Z]{2,4})$"
     },
     {
       id:3,
