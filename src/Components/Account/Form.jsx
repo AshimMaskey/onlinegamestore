@@ -4,7 +4,7 @@ import { toast } from 'react-toastify';
 import Confirm from '../Confirm/Confirm';
 
 function Form({ onClose }) {
-    const { user, setUser } = useContext(AdminContext);
+    const { user, updateUser } = useContext(AdminContext);
     const [isOpenConfirm, setIsOpenConfirm] = useState(false);
     const [error, setError] = useState('');
     const [formErrors, setFormErrors] = useState({});
@@ -37,7 +37,7 @@ function Form({ onClose }) {
                         progress: undefined,
                         theme: "light",
                     });
-                    setUser({ ...user, ...formData });
+                    updateUser({ ...user, ...formData });
                     onClose(false);
                 } else {
                     console.error('Failed to update data');
