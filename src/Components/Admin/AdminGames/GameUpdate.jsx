@@ -1,9 +1,9 @@
 import AdminContext from '@/Components/Context/AdminContext';
-import React, { useState,useContext } from 'react';
+import { showToast } from '@/Components/toast/toast';
+import React, { useState, useContext } from 'react';
 
 function GameUpdate({ game, onClose }) {
-  console.log(game);
-  const { setGamesData}=useContext(AdminContext);
+  const { setGamesData } = useContext(AdminContext);
   const [gameData, setGameData] = useState({
     game_id: game.game_id,
     game_title: game.game_title,
@@ -15,8 +15,42 @@ function GameUpdate({ game, onClose }) {
     apk: null,
   });
 
+  const [errors, setErrors] = useState({});
+
+  const validateForm = () => {
+    const newErrors = {};
+    const { game_title, price, image, apk } = gameData;
+
+    // Validate title
+    if (game_title.trim().length < 3) {
+      newErrors.game_title = 'Game title should be more than 3 words';
+    }
+
+    // Validate price
+    if (isNaN(price) || parseFloat(price) < 0) {
+      newErrors.price = 'Price should be a non-negative number';
+    }
+
+    // Validate image
+    if (image && !image.type.startsWith('image/')) {
+      newErrors.image = 'Please upload a valid image file';
+    }
+
+    // Validate APK
+    if (apk && apk.type !== 'application/vnd.android.package-archive') {
+      newErrors.apk = 'Please upload a valid APK file';
+    }
+
+    setErrors(newErrors);
+    return Object.keys(newErrors).length === 0;
+  };
+
   const handleSubmit = (e) => {
     e.preventDefault();
+
+    if (!validateForm()) {
+      return;
+    }
 
     // Create formData to handle file uploads
     const formData = new FormData();
@@ -32,7 +66,7 @@ function GameUpdate({ game, onClose }) {
 
     // Send API request to update game using fetch
     fetch('http://localhost/onlinegamestore/admin/update_game.php', {
-      method: 'POST', // Change to POST for form data
+      method: 'POST',
       body: formData,
     })
       .then((response) => {
@@ -43,9 +77,8 @@ function GameUpdate({ game, onClose }) {
       })
       .then((data) => {
         console.log('Updated game data:', data);
-        alert('Game updated successfully!');
+        showToast({condition:"success", message:"Game Updated Successfully"});
         onClose(false);
-		// setGamesData({...game,...formData});
       })
       .catch((error) => {
         console.error('Error updating game:', error);
@@ -85,6 +118,7 @@ function GameUpdate({ game, onClose }) {
               className="border-gray-400 py-1 block border-2 rounded-md text-lg pl-2 w-full"
               required
             />
+            {errors.game_title && <p className="text-red-600">{errors.game_title}</p>}
           </div>
           <div className="mb-4">
             <label htmlFor="price" className="text-xl mr-2">Price:</label>
@@ -97,6 +131,7 @@ function GameUpdate({ game, onClose }) {
               className="border-gray-400 pl-2 block py-1 border-2 rounded-md text-lg w-full"
               required
             />
+            {errors.price && <p className="text-red-600">{errors.price}</p>}
           </div>
         </div>
         <div className="flex justify-between">
@@ -144,8 +179,8 @@ function GameUpdate({ game, onClose }) {
             name="image"
             onChange={handleFileChange}
             className="border-gray-400 w-full block py-1 border-2 rounded-md text-lg pl-2"
-            required
           />
+          {errors.image && <p className="text-red-600">{errors.image}</p>}
         </div>
         <div className="mb-4">
           <label htmlFor="apk" className="text-xl mr-2">APK File:</label>
@@ -155,8 +190,8 @@ function GameUpdate({ game, onClose }) {
             name="apk"
             onChange={handleFileChange}
             className="border-gray-400 w-full block py-1 border-2 rounded-md text-lg pl-2"
-            required
           />
+          {errors.apk && <p className="text-red-600">{errors.apk}</p>}
         </div>
         <div className="flex justify-end">
           <button

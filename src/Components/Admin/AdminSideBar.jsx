@@ -1,7 +1,7 @@
 import React from 'react'
 import {  NavLink } from 'react-router-dom'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faChartLine, faClockRotateLeft, faComments, faGamepad, faNewspaper, faTableCells, faUser } from '@fortawesome/free-solid-svg-icons'
+import { faChartLine, faClockRotateLeft, faComments, faGamepad, faGem, faNewspaper, faTableCells, faUser } from '@fortawesome/free-solid-svg-icons'
 
 function AdminSideBar() {
   const navItems=[
@@ -11,12 +11,13 @@ function AdminSideBar() {
 		{link:"News Management", path:"/Admin/News", icon: faNewspaper},
 		{link:"User Details", path:"/Admin/User", icon: faUser},
 		{link:"Payment Details", path:"/Admin/PaymentDetails", icon: faClockRotateLeft},
+		{link:"Genre", path:"/Admin/Genre", icon: faGem},
 	]
   return (
 	<>
-  <div className='bg-[#18181C] h-[100vh] hidden md:block bottom-0 top-0 px-5 py-5'>
+  <div className='bg-[#18181C] h-[100vh] hidden md:block bottom-0 top-0 px-5'>
     <div>
-      <p className='text-teal-400 text-2xl font-bold text-center'>Admin Panel</p>
+      <p className='text-teal-400 text-2xl font-bold'>Admin Panel</p>
     </div>
     <div className='text-white mt-4'>
       <ul>

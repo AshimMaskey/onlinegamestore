@@ -1,6 +1,6 @@
 import React, { useContext, useState } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faUserTie, faArrowRightFromBracket, faUser, faTimes, faBars, faChartLine, faTableCells, faGamepad, faNewspaper, faClockRotateLeft } from '@fortawesome/free-solid-svg-icons';
+import { faUserTie, faArrowRightFromBracket, faUser, faTimes, faBars, faChartLine, faTableCells, faGamepad, faNewspaper, faClockRotateLeft, faGem } from '@fortawesome/free-solid-svg-icons';
 import { Link } from 'react-router-dom';
 import AdminContext from '../Context/AdminContext';
 import Confirm from '../Confirm/Confirm';
@@ -35,6 +35,7 @@ function AdminHeader() {
     { link: 'News Management', path: '/Admin/News', icon: faNewspaper },
     { link: 'User Details', path: '/Admin/User', icon: faUser },
     { link: 'Payment Details', path: '/Admin/PaymentDetails', icon: faClockRotateLeft },
+    {link:"Genre", path:"/Admin/Genre", icon: faGem},
   ];
 
   return (

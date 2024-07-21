@@ -4,6 +4,7 @@ import {logo} from '../../assets/images'
 import Button4 from '../Buttons/Button4'
 import { Link, useNavigate } from 'react-router-dom';
 import AdminContext from '../Context/AdminContext';
+import { showToast } from '../toast/toast';
 
 
 function AdminSignup() {  
@@ -109,7 +110,7 @@ const {admin}=useContext(AdminContext);
     .then(response =>{
       if(response.ok){
         console.log('signup successful');
-        alert("successfully registered!!");
+        showToast({message:"Successfully registered!!", condition:"success"});
         navigate('/Admin');
 
       }

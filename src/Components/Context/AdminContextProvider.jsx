@@ -235,6 +235,7 @@ const handleDeleteCartItem=(game_id)=>{
               console.log(`game with ID ${game_id} deleted successfully`);
               const updatedGamesData = gamesData.filter(game => game.game_id !== game_id);
               setGamesData(updatedGamesData);
+              showToast({message:"Game Deleted Successfully", condition:"success"});
             } else {
               console.error(`Failed to delete game with ID ${game_id}}`);
             }

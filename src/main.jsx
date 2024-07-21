@@ -31,6 +31,7 @@ import AdminProfile from './Components/Admin/AdminProfile';
 import Payment from './Components/Cart/Payment';
 import Download from './Components/Download/download';
 import PaymentDetails from './Components/PaymentDetails/PaymentDetails';
+import Genre from './Components/Admin/GenreManagement/Genre';
 
 const router=createBrowserRouter(
   createRoutesFromElements(
@@ -60,6 +61,7 @@ const router=createBrowserRouter(
         <Route path='/Admin/News' element={<AdminNews/>}/>
         <Route path='/Admin/Game' element={<AdminGames/>}/>
         <Route path='/Admin/PaymentDetails' element={<PaymentDetails/>}/>
+        <Route path='/Admin/Genre' element={<Genre/>}/>
 
       </Route>
       <Route path='/Admin/Signup' element={<AdminSignup/>}/>
